@@ -7,8 +7,14 @@ namespace ElasticityConsole
     {
         static void Main(string[] args)
         {
-            Class1 class1 = new Class1();
-            Console.WriteLine($"Hello {class1}!");
+            var grid = Grid.Generate3DGrid(10m,1.5m,2m,4,5,3);
+                       
+
+            Console.WriteLine(grid.ToString());
+
+            
+
+            Console.ReadKey();
         }
     }
 }
