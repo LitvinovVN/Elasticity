@@ -7,6 +7,8 @@
     {
         public Coordinates<decimal> Coordinates { get; set; }
 
+        public NodeLocationEnum NodeLocationEnum { get; set; }
+
         /// <summary>
         /// Индекс узла по оси X
         /// </summary>
@@ -55,27 +57,76 @@
 
         public override string ToString()
         {
-            string result = $"Узел [{IndexX},{IndexY},{IndexZ}]. Координаты {Coordinates.ToString()}";
+            string result = $"Узел {GetStringIndexXYZ}. Координаты {Coordinates.ToString()}";
 
             if(PrevNodeX!=null)
             {
-                result += $"\n\tPrevNodeX: [{PrevNodeX?.IndexX},{PrevNodeX?.IndexY},{PrevNodeX?.IndexZ}]";
+                result += $"\n\tPrevNodeX: {PrevNodeX.GetStringIndexXYZ}";
             }
             else
             {
                 result += $"\n\tPrevNodeX: [-,-,-]";
             }
 
+            if (PrevNodeY != null)
+            {
+                result += $"\n\tPrevNodeY: {PrevNodeY.GetStringIndexXYZ}";
+            }
+            else
+            {
+                result += $"\n\tPrevNodeY: [-,-,-]";
+            }
+
+            if (PrevNodeZ != null)
+            {
+                result += $"\n\tPrevNodeZ: {PrevNodeZ.GetStringIndexXYZ}";
+            }
+            else
+            {
+                result += $"\n\tPrevNodeZ: [-,-,-]";
+            }
+
             if (NextNodeX != null)
             {
-                result += $"\n\tNextNodeX: [{NextNodeX?.IndexX},{NextNodeX?.IndexY},{NextNodeX?.IndexZ}]";
+                result += $"\n\tNextNodeX: {NextNodeX.GetStringIndexXYZ}";
             }
             else
             {
                 result += $"\n\tNextNodeX: [-,-,-]";
             }
 
+            if (NextNodeY != null)
+            {
+                result += $"\n\tNextNodeY: {NextNodeY.GetStringIndexXYZ}";
+            }
+            else
+            {
+                result += $"\n\tNextNodeY: [-,-,-]";
+            }
+
+            if (NextNodeZ != null)
+            {
+                result += $"\n\tNextNodeZ: {NextNodeZ.GetStringIndexXYZ}";
+            }
+            else
+            {
+                result += $"\n\tNextNodeZ: [-,-,-]";
+            }
+
+            result += $"\n\tNodeLocationEnum: {NodeLocationEnum}";
+
             return result;
+        }
+
+        /// <summary>
+        /// Строковое представление индексов узла
+        /// </summary>
+        public string GetStringIndexXYZ
+        {
+            get
+            {
+                return $"[{IndexX},{IndexY},{IndexZ}]";
+            }            
         }
     }
 }
