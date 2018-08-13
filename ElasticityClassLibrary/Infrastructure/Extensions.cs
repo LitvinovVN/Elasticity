@@ -9,7 +9,7 @@ namespace ElasticityClassLibrary
     /// </summary>
     public static class Extensions
     {
-        public static string ToStringFromList(this List<Node> nodes)
+        public static string ToStringFromList<T>(this List<T> nodes)
         {
             if(nodes==null || nodes.Count==0)
                 return "Узлы отсутствуют";

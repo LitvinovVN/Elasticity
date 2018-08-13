@@ -1,0 +1,22 @@
+﻿using System;
+using Xunit;
+using ElasticityClassLibrary;
+
+namespace ElasticityClassLibraryXUnitTests
+{
+    public class GridXUnitTests
+    {
+        [Fact]
+        public void GridCreating()
+        {
+            // Подготовка
+            var Grid1 = new Grid(10, 10, 10, 10, 10, 10);
+
+            // Действие
+            var Grid2 = new Grid(10, 10, 10, 10, 10, 10);
+
+            // Проверка
+            Assert.Equal(Grid1.GridSizeX, Grid2.GridSizeX);
+        }
+    }
+}

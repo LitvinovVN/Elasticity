@@ -1,6 +1,8 @@
 ﻿using ElasticityClassLibrary;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml.Serialization;
 
 namespace ElasticityConsole
 {
@@ -8,167 +10,141 @@ namespace ElasticityConsole
     {
         static void Main(string[] args)
         {
-            GenerateGridsTests();
+            char key;
+            do
+            {                
+                Console.Clear();
+                Console.WriteLine("Выберите номер команды или 'q' для выхода:");
+                Console.WriteLine("1. GenerateGridTests();");
+                Console.WriteLine("2. GenerateGridsTests();");
+                //Console.WriteLine("3. SetPrevAndNextNodesTests();");
+                key = Console.ReadKey(true).KeyChar;
+                Console.Clear();
 
-            List<Grid> testGrids = new List<Grid>();
+                switch (key)
+                {
+                    case '1':
+                        GenerateGridTests();
+                        break;
+                    case '2':
+                        GenerateGridsTests();
+                        break;
+                    case '3':
+                        //SetPrevAndNextNodesTests();
+                        break;
+                }
+            }
+            while (key!='q');
+                       
+        }
 
-            for(int i=0;i<=2;i++)
+        #region Вспомогательные методы
+        /// <summary>
+        /// Запрос ввода значения типа decimal
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        private static decimal RequestingUserInputDecimalValue(string message)
+        {
+            decimal userInput = 0;
+            bool isCorrectValue = false;
+            do
             {
-                Console.WriteLine($"Генерирование сетки {i}. Grid.Generate3DGrid(10m,1.5m,2m,100,10,10):\n");
-                PerformanceMonitor.Start();
-                var grid = Grid.Generate3DGrid(10m, 1.5m, 2m, 100, 10, 10);
-                var pmResults = PerformanceMonitor.Stop();
-                Console.WriteLine(grid.GetDescription);
-                Console.WriteLine(pmResults.ToString());
+                try
+                {
+                    Console.Write(message);
+                    userInput = Convert.ToDecimal(Console.ReadLine());
+                    isCorrectValue = true;
+                }
+                catch (Exception exc)
+                {
+                    Console.WriteLine($"Ошибка! Введенную последовательность символов не удалось преобразовать в тип decimal.");
+                }
+            }
+            while (!isCorrectValue);
+            return userInput;
+        }
 
-                testGrids.Add(grid);
+        /// <summary>
+        /// Запрос ввода значения типа long
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        private static long RequestingUserInputLongValue(string message)
+        {
+            long userInput = 0;
+            bool isCorrectValue = false;
+            do
+            {
+                try
+                {
+                    Console.Write(message);
+                    userInput = Convert.ToInt64(Console.ReadLine());
+                    isCorrectValue = true;
+                }
+                catch (Exception exc)
+                {
+                    Console.WriteLine($"Ошибка! Введенную последовательность символов не удалось преобразовать в тип long.");
+                }
+            }
+            while (!isCorrectValue);
+            return userInput;
+        }               
+
+        /// <summary>
+        /// Ожидание нажатия пользователем любой клавиши
+        /// с очисткой консоли
+        /// </summary>
+        private static void WaitForUserClickAnyButton()
+        {
+            Console.WriteLine("Для продолжения нажмите любую клавишу.");
+            Console.ReadKey(true);
+            Console.Clear();
+        }
+        #endregion
+
+        /// <summary>
+        /// Исследование создания одномерных сеток
+        /// </summary>
+        private static void GenerateGridTests()
+        {
+            Grid grid = new Grid(10m, 1m, 0.5m, 10, 5, 5);            
+            Console.WriteLine($"Проверка корректности сетки: {grid.GridValidity()}");
+
+            var result = grid.InsertLayerX(10m);
+            result = grid.InsertLayerX(0.3m);
+            result = grid.InsertLayerX(0.2m);
+            result = grid.InsertLayerX(0.1m);
+            result = grid.InsertLayerX(9.0m);
+            result = grid.InsertLayerX(1.5m);
+            result = grid.InsertLayerX(4.3m);
+            result = grid.InsertLayerX(9.7m);
+
+            /////////////////////////
+            XmlSerializer formatter = new XmlSerializer(typeof(Grid));
+            using (FileStream fs = new FileStream("grid1D.xml", FileMode.Create))
+            {
+                formatter.Serialize(fs, grid);
+
+                Console.WriteLine("Объект сериализован");
             }
 
-            CheckGrids(testGrids);
-
-            Console.WriteLine("\n-------------------------------------\n");
-            Console.WriteLine("\ngrid.SetPrevAndNextNodes(false) - последовательная реализация:\n");
-            PerformanceMonitor.Start();
-            testGrids[0].SetPrevAndNextNodes(false);
-            var pmResults2 = PerformanceMonitor.Stop();
-            Console.WriteLine(pmResults2.ToString());
-
-            Console.WriteLine("\ngrid.SetPrevAndNextNodes(true) - параллельная реализация:\n");
-            PerformanceMonitor.Start();
-            testGrids[1].SetPrevAndNextNodes(true);
-            var pmResults3 = PerformanceMonitor.Stop();
-            Console.WriteLine(pmResults3.ToString());
-
-            Console.WriteLine("\ngrid.SetPrevAndNextNodes(true,true) - параллельная реализация с использованием Partitioner:\n");
-            PerformanceMonitor.Start();
-            testGrids[2].SetPrevAndNextNodes(true,true);
-            var pmResults4 = PerformanceMonitor.Stop();
-            Console.WriteLine(pmResults4.ToString());
-
-            CheckGrids(testGrids);
-            ///////////////
-
-
-            //Console.WriteLine(grid.ToString());
-
-            //Console.WriteLine("\nПоиск узла [1,0,2]");
-            //Node findedNode = grid.GetNode(1, 0, 2);
-            //Console.WriteLine(findedNode.ToString());
-
-            //Console.WriteLine("\nПоиск несуществующего узла [1,0,-2]");
-            //Node findedNode2 = grid.GetNode(1, 0, -2);
-            //Console.WriteLine(findedNode2?.ToString() ?? "Узел не существует");
-
-            //Console.WriteLine("\n-----Внутренние узлы----- ");
-            //var nodesInsideSurfase = grid.NodesInternal;
-            //Console.WriteLine(nodesInsideSurfase.ToStringFromList());
-
-            //Console.WriteLine("\n-----Узлы на поверхности----- ");
-            //var nodesOnTheSurface = grid.NodesOnTheSurface;
-            //Console.WriteLine(nodesOnTheSurface.ToStringFromList());
-
-            //Console.WriteLine("\n-----Внешние (фиктивные) узлы----- ");
-            //var nodesUoterSurface = grid.NodesOuter;
-            //Console.WriteLine(nodesUoterSurface.ToStringFromList());
-
-            Console.ReadKey();
+            ////////////////////////////
+            WaitForUserClickAnyButton();
         }
+
 
         /// <summary>
         /// Тесты производительности алгоритмов генерирования сеток
         /// </summary>
         static void GenerateGridsTests()
-        {            
-            decimal sizeX = 1m;
-            decimal sizeY = 1m;
-            decimal sizeZ = 1m;
-            int NumberNodesXmin = 1000;
-            int NumberNodesYmin = 10;
-            int NumberNodesZmin = 10;
-            int NumberNodesXmax = 1000;
-            int NumberNodesYmax = 100;
-            int NumberNodesZmax = 100;
-            int NumberNodesXstep = 1000;
-            int NumberNodesYstep = 10;
-            int NumberNodesZstep = 10;
-
-            Console.WriteLine($"---Тест генерирования сетки t=f(NumberNodesX) ---");
-            for (int x = NumberNodesXmin;x <= NumberNodesXmax; x += NumberNodesXstep)
-            {                
-                PerformanceMonitor.Start();
-                var grid = Grid.Generate3DGrid(sizeX, sizeY, sizeZ, x, 10, 10);
-                var pmResults = PerformanceMonitor.Stop();
-                Console.WriteLine($"{grid.GetDescription} \t {pmResults.ElapsedMilliseconds} мс");                
-            }
-
-            
-
-            
-        }
-
-        /// <summary>
-        /// Проверка равенства содержимого сеток
-        /// </summary>
-        /// <param name="testGrids"></param>
-        static void CheckGrids(List<Grid> testGrids)
         {
-            Console.WriteLine("\n-----Проверка сеток-----");
+            Console.Clear();
+           
 
-            //// Сравнение результатов расчетов
-            bool isCoordXEquals = true;
-            bool isCoordYEquals = true;
-            bool isCoordZEquals = true;
-            for (int i = 0; i < testGrids[0].Nodes.Count; i++)
-            {
-                if (!(testGrids[0].Nodes[i].Coordinates.CoordX == testGrids[1].Nodes[i].Coordinates.CoordX &&
-                        testGrids[0].Nodes[i].Coordinates.CoordX == testGrids[2].Nodes[i].Coordinates.CoordX))
-                {
-                    isCoordXEquals = false;
-                    break;
-                }
-
-
-                if (!(testGrids[0].Nodes[i].Coordinates.CoordY == testGrids[1].Nodes[i].Coordinates.CoordY &&
-                        testGrids[0].Nodes[i].Coordinates.CoordY == testGrids[2].Nodes[i].Coordinates.CoordY))
-                {
-                    isCoordYEquals = false;
-                    break;
-                }
-
-                if (!(testGrids[0].Nodes[i].Coordinates.CoordZ == testGrids[1].Nodes[i].Coordinates.CoordZ &&
-                        testGrids[0].Nodes[i].Coordinates.CoordZ == testGrids[2].Nodes[i].Coordinates.CoordZ))
-                {
-                    isCoordZEquals = false;
-                    break;
-                }
-            }
-
-            if (!isCoordXEquals)
-            {
-                Console.WriteLine($"Ошибка! Координаты по оси X не равны!");
-            }
-            else
-            {
-                Console.WriteLine($"ОК. Координаты по оси X равны.");
-            }
-
-            if (!isCoordYEquals)
-            {
-                Console.WriteLine($"Ошибка! Координаты по оси Y не равны!");
-            }
-            else
-            {
-                Console.WriteLine($"ОК. Координаты по оси Y равны.");
-            }
-
-            if (!isCoordZEquals)
-            {
-                Console.WriteLine($"Ошибка! Координаты по оси Z не равны!");
-            }
-            else
-            {
-                Console.WriteLine($"ОК. Координаты по оси Z равны.");
-            }
+            WaitForUserClickAnyButton();
         }
+
+        
     }
 }

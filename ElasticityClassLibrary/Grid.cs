@@ -4,219 +4,337 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace ElasticityClassLibrary
 {
     /// <summary>
     /// Сетка
     /// </summary>
+    [Serializable]
     public class Grid
     {
+        #region Габаритные размеры расчетной области
         /// <summary>
-        /// Узлы сетки
+        /// Размер расчетной области по оси X
         /// </summary>
-        public List<Node> Nodes { get; set; } = new List<Node>();
+        public decimal GridSizeX { get; set; }
+        /// <summary>
+        /// Размер расчетной области по оси Y
+        /// </summary>
+        public decimal GridSizeY { get; set; }
+        /// <summary>
+        /// Размер расчетной области по оси Z
+        /// </summary>
+        public decimal GridSizeZ { get; set; }
+        #endregion
+        
+        #region Правила переходов шагов сетки по осям
+        /// <summary>
+        /// Хранилище переходов шагов сетки по оси X
+        /// </summary>
+        public List<StepTransition> StepTransitionsX { get; set; } = new List<StepTransition>();
+        /// <summary>
+        /// Хранилище переходов шагов сетки по оси Y
+        /// </summary>
+        public List<StepTransition> StepTransitionsY { get; set; } = new List<StepTransition>();
+        /// <summary>
+        /// Хранилище переходов шагов сетки по оси Z
+        /// </summary>
+        public List<StepTransition> StepTransitionsZ { get; set; } = new List<StepTransition>();
+        #endregion
 
+        #region Конструкторы
         /// <summary>
-        /// Внутренние узлы
+        /// Конструктор. Создаёт сетку с заданным по осям числом узлов
         /// </summary>
-        public List<Node> NodesInternal
+        /// <param name="GridSizeX">Размер расчетной области по оси X</param>
+        /// <param name="GridSizeY">Размер расчетной области по оси Y</param>
+        /// <param name="GridSizeZ">Размер расчетной области по оси Z</param>
+        /// <param name="NumX">Количество участков по оси X</param>
+        /// <param name="NumY">Количество участков по оси Y</param>
+        /// <param name="NumZ">Количество участков по оси Z</param>
+        public Grid(decimal GridSizeX,
+            decimal GridSizeY,
+            decimal GridSizeZ,
+            uint NumX,
+            uint NumY,
+            uint NumZ)
         {
-            get
+            this.GridSizeX = GridSizeX;
+            this.GridSizeY = GridSizeY;
+            this.GridSizeZ = GridSizeZ;
+
+            StepTransition stX = new StepTransition(NumX, GridSizeX / NumX, GridSizeX);
+            StepTransitionsX.Add(stX);
+
+            StepTransition stY = new StepTransition(NumY, GridSizeY / NumY, GridSizeY);
+            StepTransitionsY.Add(stY);
+
+            StepTransition stZ = new StepTransition(NumZ, GridSizeZ / NumZ, GridSizeZ);
+            StepTransitionsZ.Add(stZ);
+        }
+
+        public Grid()
+        {
+
+        }
+        #endregion
+
+        #region Работа со слоями сетки
+        /// <summary>
+        /// Добавить слой сетки YZ в заданной координате X
+        /// </summary>
+        /// <param name="CoordinateX">Координата X вставки слоя</param>
+        public StepTransition InsertLayerX(decimal coordinate)
+        {
+            /* Вставку слоя моделируем добавлением правила
+             * перехода шагов сетки по оси X с корректировкой смежных шагов
+             * ----------i----------j-------K---l----------
+             * 
+             * Графическая интерпретация
+             *                                0                 1             2  3          - индексы StepTransitionsX
+             *                                15                23            29 30         - StepTransitionsX[i].Index
+             *                                5                 4             3  1          - StepTransitionsX[i].StepValue
+             * 0 - - - - 5 - - - - 10 - - - - 15 - - - 19 - - - 23 - - 26 - - 29 30 ...     - индексы слоёв
+             * - координаты слоёв
+             *
+             * Вставка
+             */
+                         
+            StepTransition prevStepTransition = null;
+            StepTransition curStepTransition  = null;
+            StepTransition nextStepTransition = null;
+
+            int? prevStepTransitionListIndex = null;
+            int? nextStepTransitionListIndex = null;
+            for (int i=0; i<=StepTransitionsX.Count; i++)
             {
-                return GetNodes(NodeLocationEnum.Internal);
-            }
-        }
+                // Если переданная координата совпадает с существующим переходом,
+                // новый переход не создаём, а возвращаем существующий
+                if(StepTransitionsX[i].Coordinate == coordinate)
+                {
+                    return StepTransitionsX[i];
+                }
 
-        /// <summary>
-        /// Узлы на поверхности
-        /// </summary>
-        public List<Node> NodesOnTheSurface
-        {
-            get
-            {
-                return GetNodes(NodeLocationEnum.OnTheSurface);
-            }
-        }
-
-        /// <summary>
-        /// Законтурные узлы (фиктивные)
-        /// </summary>
-        public List<Node> NodesOuter
-        {
-            get
-            {
-                return GetNodes(NodeLocationEnum.Outer);
-            }
-        }
-
-        /// <summary>
-        /// Возвращает все узлы сетки с заданным расположением
-        /// </summary>
-        /// <param name="onTheSurface"></param>
-        /// <returns></returns>
-        public List<Node> GetNodes(NodeLocationEnum nodeLocation)
-        {
-            List<Node> nodes = new List<Node>();
-            nodes = Nodes.Where(n => n.NodeLocationEnum == nodeLocation).ToList();
-            return nodes;
-        }
-
-        /// <summary>
-        /// Возвращает краткое описание сетки
-        /// </summary>
-        public string GetDescription
-        {
-            get
-            {
-                string result = $"Кол-во узлов: {Nodes.Count}, в т.ч. {NodesInternal.Count} внутренних, {NodesOnTheSurface.Count} на поверхности, {NodesOuter.Count} внешних (фиктивных)";
-                return result;
-            }
-        }
-
-        /// <summary>
-        /// Генерирует сетку для тела в форме параллелепипеда по заданным размерам и количеству узлов для каждой оси
-        /// </summary>
-        /// <typeparam name="T">Тип данных размера тела</typeparam>
-        /// <param name="SizeX">Размер тела по оси X</param>
-        /// <param name="SizeY">Размер тела по оси Y</param>
-        /// <param name="SizeZ">Размер тела по оси Z</param>
-        /// <param name="NumberNodesX">Количество узлов по оси X</param>
-        /// <param name="NumberNodesY">Количество узлов по оси Y</param>
-        /// <param name="NumberNodesZ">Количество узлов по оси Z</param>
-        /// <returns>Объект Grid</returns>
-        public static Grid Generate3DGrid(decimal SizeX, decimal SizeY, decimal SizeZ, int NumberNodesX, int NumberNodesY, int NumberNodesZ)
-        {
-            var grid = new Grid();
-            
-            // Вычисляем шаги сетки для осей X, Y, Z
-            var gridStepX = SizeX / (NumberNodesX - 1);
-            var gridStepY = SizeY / (NumberNodesY - 1);
-            var gridStepZ = SizeZ / (NumberNodesZ - 1);
-                        
-            for (int z = 0; z < NumberNodesZ; z++)
-            {                
-                for (int y = 0; y < NumberNodesY; y++)
-                {                    
-                    for (int x = 0; x < NumberNodesX; x++)
+                // Поиск первого перехода, координата которого
+                // превышает переданное значение
+                if(StepTransitionsX[i].Coordinate > coordinate)
+                {
+                    // Определяем индексы переходов слева и справа
+                    nextStepTransitionListIndex = i;
+                    nextStepTransition = StepTransitionsX[i];
+                    if (i > 0)
                     {
-                        Node node = new Node();
-                        node.IndexX = x;
-                        node.IndexY = y;
-                        node.IndexZ = z;
-                        node.Coordinates = new Coordinates<decimal>();
-                        node.Coordinates.CoordX = x * gridStepX;
-                        node.Coordinates.CoordY = y * gridStepY;
-                        node.Coordinates.CoordZ = z * gridStepZ;
-
-                        if (x == 0 || y == 0 || z == 0 || x == NumberNodesX - 1 || y == NumberNodesY - 1 || z == NumberNodesZ - 1)
-                            node.NodeLocationEnum = NodeLocationEnum.OnTheSurface;                        
-
-                        grid.AddNode(node);                        
+                        prevStepTransitionListIndex = i - 1;
+                        prevStepTransition = StepTransitionsX[i-1];
                     }
+                    break;
                 }
             }
 
-            //grid.SetPrevAndNextNodes();
+            // Возможны три варианта расположения нового слоя:
+            // 1 - до первого перехода:              предыдущий   = null,                   следующий = 0
+            // 2 - между существующими переходами:   предыдущий > = 0,                      следующий < StepTransitions.Count
+            // 3 - за границей расчетной области:    предыдущий   = StepTransitions.Count,  следующий = null
+            // Если координата превышает габаритные размеры расчетной области, возвращаем null
 
-            return grid;
+            // Обработка 3 варианта: новый слой расположен за пределами расчетной области,
+            // возвращаем null
+            if (nextStepTransitionListIndex == null) return null;
+
+            // Обработка 1 варианта: новый слой расположен до первого перехода
+            if(prevStepTransitionListIndex==null)
+            {
+                //// Определяем существующие предыдущий и последующий слои около добавляемого слоя
+                // Шаг сетки до правого перехода
+                decimal oldStep = nextStepTransition.StepValue;
+
+                // Если координата добавляемого узла меньше существующего шага сетки,
+                // значит добавляемый узел будет первым после 0-го узла
+                if(coordinate < oldStep)
+                {
+                    // Добавляем переходы в добавляемой координате
+                    // и переход в существующем слое справа от добавляемого
+                    // (если он уже есть, то не добавляем)
+                    int position = 0;           // Позиция вставки в списке                    
+                    var newItem  = new StepTransition(1, coordinate, coordinate);
+                    var rightItem = new StepTransition(2, oldStep - coordinate, oldStep);
+                    if (nextStepTransition.Coordinate == rightItem.Coordinate)
+                    {
+                        // Переход справа уже есть.
+                        // Добавляем только новый.
+                        StepTransitionsX.Insert(position, newItem);
+                        // Исправляем шаг в существующем правом переходе
+                        nextStepTransition.StepValue = nextStepTransition.Coordinate - newItem.Coordinate;
+                    }
+                    else
+                    {
+                        StepTransitionsX.InsertRange(position, new List<StepTransition> { newItem, rightItem });                        
+                    }
+
+                    // Корректируем индексы в списке переходов
+                    CorrectIndexesInStepTransition(StepTransitionsX);
+
+                    return StepTransitionsX[position];
+                }
+            }
+
+            // Обработка 2 варианта: новый слой расположен между существующими переходами
+            if (prevStepTransitionListIndex>=0)
+            {
+                // Определяем слои слева и справа от места вставки.
+                // Возможны 4 варианта:
+                // 1) добавляемый слой совпадает с существующим - ничего не делаем
+                // 2) левый слой - переход
+                // 3) левый и правый слои - не переходы
+                // 4) правый слой - переход
+                StepTransition prevLayer = new StepTransition();
+                StepTransition nextLayer = new StepTransition();
+
+                // Расстояние от левого перехода до координаты добавляемого слоя
+                decimal d = coordinate - prevStepTransition.Coordinate;
+                // Количество слоёв от левого перехода до координаты
+                decimal dLayers = d / nextStepTransition.StepValue;
+                uint dLayersUINT = (uint)Decimal.Truncate(dLayers);
+                // Детектор совпадения координаты добавляемого слоя с имеющимися
+                decimal sovpadenie = d % nextStepTransition.StepValue;
+
+                // 1 вариант. Добавляемый слой совпадает с существующим - ничего не делаем
+                if (sovpadenie == 0m) return null;
+
+                // 2 вариант. Левый слой - переход
+                // - добавляем текущий переход по переданной координате
+                if (dLayers < 1)
+                {
+                    prevLayer = prevStepTransition;
+                    curStepTransition = new StepTransition(prevLayer.Index+1,
+                        coordinate - prevLayer.Coordinate,
+                        coordinate);
+                    nextLayer = new StepTransition(curStepTransition.Index + 1,
+                        prevLayer.Coordinate + nextStepTransition.StepValue - coordinate,
+                        prevLayer.Coordinate + nextStepTransition.StepValue);
+                    StepTransitionsX.InsertRange((int)nextStepTransitionListIndex,
+                        new List<StepTransition> { curStepTransition, nextLayer });
+                    IncreaseIndexesInStepTransition(StepTransitionsX, nextLayer.Index+1, 1);
+                    return curStepTransition;
+                }
+
+                // 3) левый и правый слои - не переходы
+                if(dLayers < ((nextStepTransition.Coordinate-prevStepTransition.Coordinate)/nextStepTransition.StepValue-1))
+                {
+                    prevLayer = new StepTransition(prevStepTransition.Index + dLayersUINT,
+                        nextStepTransition.StepValue,
+                        prevStepTransition.Coordinate + nextStepTransition.StepValue * dLayersUINT);
+                    curStepTransition = new StepTransition(prevLayer.Index + 1,
+                        coordinate - prevLayer.Coordinate,
+                        coordinate);                    
+                    nextLayer = new StepTransition(curStepTransition.Index + 1,
+                        prevLayer.Coordinate + nextStepTransition.StepValue - coordinate,
+                        prevLayer.Coordinate + nextStepTransition.StepValue);
+
+                    StepTransitionsX.InsertRange((int)nextStepTransitionListIndex,
+                        new List<StepTransition> { prevLayer, curStepTransition, nextLayer });
+                    IncreaseIndexesInStepTransition(StepTransitionsX, nextLayer.Index + 1, 1);
+                    return curStepTransition;
+                }// 4) правый слой - переход
+                else
+                {
+                    prevLayer = new StepTransition(prevStepTransition.Index + dLayersUINT,
+                        nextStepTransition.StepValue,
+                        prevStepTransition.Coordinate + nextStepTransition.StepValue * dLayersUINT);
+                    curStepTransition = new StepTransition(prevLayer.Index + 1,
+                        coordinate - prevLayer.Coordinate,
+                        coordinate);
+                    nextLayer = nextStepTransition;
+                    nextLayer.Index++;
+                    nextLayer.StepValue = nextLayer.Coordinate - curStepTransition.Coordinate;
+
+
+                    StepTransitionsX.InsertRange((int)nextStepTransitionListIndex,
+                        new List<StepTransition> { prevLayer, curStepTransition });
+                    IncreaseIndexesInStepTransition(StepTransitionsX, nextLayer.Index + 1, 1);
+                    return curStepTransition;
+                }
+            }
+
+            return null;
         }
 
         /// <summary>
-        /// Устанавливает ссылки на все предшествующие и последующие узлы для всех узлов сетки
+        /// Увеличивает индексы во всех элементах списка
+        /// на указанное число, начиная с указанной позиции
         /// </summary>
-        /// <param name="IsParallel">Флаг использования параллельного алгоритма</param>
-        public void SetPrevAndNextNodes(bool IsParallel=true, bool IsPartitionerUsed=false)
+        /// <param name="stepTransitionsX">Список</param>
+        /// <param name="stepTransitionIndexStart">Индекс на оси, с которого нужно увеличивать</param>
+        /// <param name="value">Значение, на которое нужно увеличить индекс</param>
+        private void IncreaseIndexesInStepTransition(List<StepTransition> stepTransitionList, uint stepTransitionIndexStart, uint value)
         {
-            if(IsParallel)
+            for (int i = stepTransitionList.Count-1; i >= 0; i--)
             {
-                if (IsPartitionerUsed)
+                if (stepTransitionList[i].Index < stepTransitionIndexStart) return;
+                stepTransitionList[i].Index += value;
+            }
+        }
+
+        /// <summary>
+        /// Перерасчет индексов в списке переходов
+        /// </summary>
+        /// <param name="stepTransitionList"></param>
+        private void CorrectIndexesInStepTransition(List<StepTransition> stepTransitionList)
+        {
+            uint index = 0;
+            for (int i = 0; i < stepTransitionList.Count; i++)
+            {
+                if(i==0)
                 {
-                    // Параллельная реализация с использованием класса Partitioner
-                    var nodePartitioner = Partitioner.Create(0, Nodes.Count - 1);
-                    Parallel.ForEach(nodePartitioner, (range, loopState) =>
-                    {
-                        for(int i=range.Item1;i<range.Item2;i++)
-                        {
-                            SetPrevAndNextNodesForSingleNode(Nodes[i]);
-                        }
-                    });
+                    index += (uint)(stepTransitionList[i].Coordinate / stepTransitionList[i].StepValue);
                 }
                 else
                 {
-                    // Параллельная реализация
-                    Parallel.ForEach(Nodes, (node) => SetPrevAndNextNodesForSingleNode(node));
-                }                
+                    index += (uint)((stepTransitionList[i].Coordinate - stepTransitionList[i - 1].Coordinate) / stepTransitionList[i].StepValue);
+                }
+                
+                stepTransitionList[i].Index = index;
             }
-            else
-            {
-                // Последовательная реализация
-                Nodes.ForEach((node) => SetPrevAndNextNodesForSingleNode(node));
-                //foreach (var node in Nodes)
-                //{
-                //    node.PrevNodeX = GetNode(node.IndexX - 1, node.IndexY, node.IndexZ);
-                //    node.PrevNodeY = GetNode(node.IndexX, node.IndexY - 1, node.IndexZ);
-                //    node.PrevNodeZ = GetNode(node.IndexX, node.IndexY, node.IndexZ - 1);
-                //    node.NextNodeX = GetNode(node.IndexX + 1, node.IndexY, node.IndexZ);
-                //    node.NextNodeY = GetNode(node.IndexX, node.IndexY + 1, node.IndexZ);
-                //    node.NextNodeZ = GetNode(node.IndexX, node.IndexY, node.IndexZ + 1);
-                //}
-            }            
         }
+        #endregion
 
+
+        #region Вспомогательные методы
         /// <summary>
-        /// Устанавливает все предыдущие и последующие узлы для переданного узла
+        /// Проверяет корректность сетки
         /// </summary>
-        /// <param name="node"></param>
-        public void SetPrevAndNextNodesForSingleNode(Node node)
-        {
-            node.PrevNodeX = GetNode(node.IndexX - 1, node.IndexY, node.IndexZ);
-            node.PrevNodeY = GetNode(node.IndexX, node.IndexY - 1, node.IndexZ);
-            node.PrevNodeZ = GetNode(node.IndexX, node.IndexY, node.IndexZ - 1);
-            node.NextNodeX = GetNode(node.IndexX + 1, node.IndexY, node.IndexZ);
-            node.NextNodeY = GetNode(node.IndexX, node.IndexY + 1, node.IndexZ);
-            node.NextNodeZ = GetNode(node.IndexX, node.IndexY, node.IndexZ + 1);
-        }
-
-
-        /// <summary>
-        /// Добавление узла в сетку
-        /// </summary>
-        /// <param name="node"></param>
-        public void AddNode(Node node)
-        {
-            Nodes.Add(node);
-        }
-
-        /// <summary>
-        /// Возвращает узел по заданному индексу 
-        /// </summary>
-        /// <param name="IndexX"></param>
-        /// <param name="IndexY"></param>
-        /// <param name="IndexZ"></param>
         /// <returns></returns>
-        public Node GetNode(int IndexX, int IndexY, int IndexZ)
+        public bool GridValidity()
         {
-            Node node = new Node();
+            bool IsCorrect = true;
 
-            node = Nodes.SingleOrDefault(n=>
-                n.IndexX==IndexX && 
-                n.IndexY==IndexY && 
-                n.IndexZ==IndexZ);
-
-            return node;
-        }
-
-
-
-        public override string ToString()
-        {
-            StringBuilder stringBuilder = new StringBuilder();            
-            foreach (var node in Nodes)
+            #region Габаритные размеры должны соответствовать расчитанным по правилам разбиения по осям 
+            decimal sizeX = 0;
+            foreach (var step in StepTransitionsX)
             {
-                stringBuilder.Append($"{node.ToString()??"-"}\n");
+                sizeX += step.Index * step.StepValue;
             }
-            return stringBuilder.ToString();
+            if (sizeX != GridSizeX) IsCorrect = false;
+
+            decimal sizeY = 0;
+            foreach (var step in StepTransitionsY)
+            {
+                sizeY += step.Index * step.StepValue;
+            }
+            if (sizeY != GridSizeY) IsCorrect = false;
+
+            decimal sizeZ = 0;
+            foreach (var step in StepTransitionsZ)
+            {
+                sizeZ += step.Index * step.StepValue;
+            }
+            if (sizeZ != GridSizeZ) IsCorrect = false;
+            #endregion
+
+            return IsCorrect;
         }
+        #endregion
     }
 }
