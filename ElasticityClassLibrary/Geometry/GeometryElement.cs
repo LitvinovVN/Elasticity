@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using ElasticityClassLibrary.GridNamespace;
+using System;
+using System.Collections.Generic;
 
-namespace ElasticityClassLibrary.Geometry
+namespace ElasticityClassLibrary.GeometryNamespase
 {
     /// <summary>
     /// Отдельный элемент геометрии моделируемого объекта
@@ -25,6 +27,30 @@ namespace ElasticityClassLibrary.Geometry
         /// </summary>
         public MaterialCharacteristic MaterialCharacteristic { get; set; }
             = new MaterialCharacteristic();
+
+        /// <summary>
+        /// Наборы слоёв
+        /// </summary>
+        public GridLayers3D GetGridLayers3D
+        {
+            get
+            {
+                GridLayers3D gridLayers3D = new GridLayers3D();
+
+                foreach (var item in GeometryPrimitives)
+                {
+                    var gridLayers3DFromGeometryPrimitive = item.GetGridLayers3D;
+
+                    gridLayers3DFromGeometryPrimitive.GridLayersX.ForEach(l => l.Coordinate += CoordinateLocation.X);
+                    gridLayers3DFromGeometryPrimitive.GridLayersY.ForEach(l => l.Coordinate += CoordinateLocation.Y);
+                    gridLayers3DFromGeometryPrimitive.GridLayersZ.ForEach(l => l.Coordinate += CoordinateLocation.Z);
+
+                    gridLayers3D.Merge(gridLayers3DFromGeometryPrimitive);
+                }                                                          
+                
+                return gridLayers3D;
+            }
+        }
 
         #region Конструкторы
         /// <summary>

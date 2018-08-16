@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using ElasticityClassLibrary.GridNamespace;
 
-namespace ElasticityClassLibrary.Geometry
+namespace ElasticityClassLibrary.GeometryNamespase
 {
     /// <summary>
     /// Параллелепипед
@@ -40,6 +41,11 @@ namespace ElasticityClassLibrary.Geometry
         /// Длина стороны куба
         /// </summary>
         public decimal Length { get; set; }
-        #endregion               
+        #endregion
+
+        /// <summary>
+        /// Возвращает объект со списками слоёв
+        /// </summary>
+        public override GridLayers3D GetGridLayers3D => throw new NotImplementedException();
     }
 }

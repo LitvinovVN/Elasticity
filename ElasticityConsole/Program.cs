@@ -1,5 +1,6 @@
 ﻿using ElasticityClassLibrary;
-using ElasticityClassLibrary.Geometry;
+using ElasticityClassLibrary.GeometryNamespase;
+using ElasticityClassLibrary.GridNamespace;
 using ElasticityClassLibrary.NagruzkaNamespace;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace ElasticityConsole
                 Console.WriteLine("1. GenerateGridTests();");
                 Console.WriteLine("2. GridInsertionsRandom();");
                 Console.WriteLine("3. GeometryParallelepipedTests();");
+                Console.WriteLine("4. GridWithGeometryPreCalculatedTests();");
                 key = Console.ReadKey(true).KeyChar;
                 Console.Clear();
 
@@ -34,12 +36,16 @@ namespace ElasticityConsole
                     case '3':
                         GeometryParallelepipedTests();
                         break;
+                    case '4':
+                        GridWithGeometryPreCalculatedTests();
+                        break;
                 }
             }
-            while (key!='q');
+            while ( key!='q' && key!='й');
                        
         }
-                
+              
+
 
         #region Вспомогательные методы
         /// <summary>
@@ -150,7 +156,7 @@ namespace ElasticityConsole
         static void GridInsertionsRandom()
         {
             Grid grid = new Grid(10m, 1m, 0.5m, 100, 100, 100);
-            Console.WriteLine($"Сгенерирована сетка 10*1*0.5 с числом узлов 10, 5, 5");
+            Console.WriteLine($"Сгенерирована сетка 10*1*0.5 с числом узлов 100, 100, 100");
             Console.WriteLine($"Проверка корректности сетки: {grid.GridValidity()}");
                         
             // Исследование скорости вставки случайных слоёв
@@ -216,6 +222,28 @@ namespace ElasticityConsole
             Geometry g2 = Geometry.ImportFromXML("", "GeometryParallelepiped.xml");
             Console.WriteLine("Проверка на равенство серализованного и десериализованного объектов: {0}", Geometry.IsGeometryValuesEquals(geometry, g2));            
             ////////////////////////////
+            WaitForUserClickAnyButton();
+        }
+
+        /// <summary>
+        /// Исследование характеристик работы с объектом GridWithGeometryPreCalculated
+        /// </summary>
+        private static void GridWithGeometryPreCalculatedTests()
+        {
+            Grid grid = new Grid(10m, 10m, 10m, 5, 10, 20);
+
+            Geometry geometry = new Geometry();
+            GeometryElement geometryElement = new GeometryElement(new Coordinate3D(1m, 2m, 3m));
+            geometryElement.GeometryPrimitives.Add(new GeometryPrimitiveParallelepiped(new Coordinate3D(0.1m, 0.2m, 0.3m), 3m, 1m, 2m));
+            geometry.GeometryElements.Add(geometryElement);
+
+            var gridWithGeometryPreCalculated = new GridWithGeometryPreCalculated(grid, geometry);
+
+            /////////////////////////            
+            Console.WriteLine("Сериализация объекта GridWithGeometryPreCalculated: {0}", gridWithGeometryPreCalculated.ExportToXML("", "GridWithGeometryPreCalculated.xml"));
+            GridWithGeometryPreCalculated g2 = GridWithGeometryPreCalculated.ImportFromXML("", "GridWithGeometryPreCalculated.xml");
+            //Console.WriteLine("Проверка на равенство серализованного и десериализованного объектов: {0}", GridWithGeometryPreCalculated.IsGridWithGeometryPreCalculatedValuesEquals(gridWithGeometryPreCalculated, g2));
+            ////////////////////////////            
             WaitForUserClickAnyButton();
         }
     }

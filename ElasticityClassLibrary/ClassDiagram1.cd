@@ -1,12 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="ElasticityClassLibrary.Grid">
-    <Position X="12.75" Y="2.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAACABgQAAAAAACAAAAAAAAAgAA0AAAAAAAIAAAA=</HashCode>
-      <FileName>Grid.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="ElasticityClassLibrary.StepTransition">
     <Position X="10.5" Y="2.25" Width="2" />
     <TypeIdentifier>
@@ -14,45 +7,45 @@
       <FileName>StepTransition.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ElasticityClassLibrary.Geometry.Geometry">
+  <Class Name="ElasticityClassLibrary.GeometryNamespase.Geometry">
     <Position X="0.75" Y="0.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAABEAAAAAAAAAAAAAAAAQAAAAAAAAAAAEAA=</HashCode>
+      <HashCode>ACAAAAAAAABEAAAAAAAAAAAAAAAAQAAAAAAAAAAAEAA=</HashCode>
       <FileName>Geometry\Geometry.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ElasticityClassLibrary.Geometry.GeometryElement">
+  <Class Name="ElasticityClassLibrary.GeometryNamespase.GeometryElement">
     <Position X="3.5" Y="0.5" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>AABAAAAAAAAAAAAEAAAAEAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>ACBAAAAAAAAAAAAEAAAAEAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Geometry\GeometryElement.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ElasticityClassLibrary.Geometry.GeometryPrimitive">
+  <Class Name="ElasticityClassLibrary.GeometryNamespase.GeometryPrimitive">
     <Position X="4" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAQAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <HashCode>ACAAAAAAQAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
       <FileName>Geometry\GeometryPrimitive.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ElasticityClassLibrary.Geometry.GeometryPrimitiveParallelepiped">
-    <Position X="2.5" Y="5" Width="2" />
+  <Class Name="ElasticityClassLibrary.GeometryNamespase.GeometryPrimitiveParallelepiped">
+    <Position X="2" Y="5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AADAAgAAQAAAAAAAAABAAGABAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <HashCode>ACAEAAAAQAAAAAAAAABAAGABAAAAAAQAAAAAAAAAAAI=</HashCode>
       <FileName>Geometry\GeometryPrimitiveParallelepiped.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ElasticityClassLibrary.Geometry.GeometryPrimitiveCube">
+  <Class Name="ElasticityClassLibrary.GeometryNamespase.GeometryPrimitiveCube">
     <Position X="4.75" Y="5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAQAAAAAAAAAAAAABAAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <HashCode>ACAAAAAAQAAAAAAAAAAAAABAAAAAAAQAAAAAAAAAAAA=</HashCode>
       <FileName>Geometry\GeometryPrimitiveCube.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ElasticityClassLibrary.Geometry.MaterialCharacteristic">
+  <Class Name="ElasticityClassLibrary.GeometryNamespase.MaterialCharacteristic">
     <Position X="6.75" Y="0.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAgEAAAA=</HashCode>
+      <HashCode>AAAAACAAAAAAAAAAAAAAAAACAAAAAAAAAAAACgEAAAA=</HashCode>
       <FileName>Geometry\MaterialCharacteristic.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -66,7 +59,7 @@
   <Class Name="ElasticityClassLibrary.NagruzkaNamespace.NagruzkaRaspredRavnomern" Collapsed="true">
     <Position X="8.25" Y="8.5" Width="3" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAgAAA=</HashCode>
       <FileName>Nagruzka\NagruzkaRaspredRavnomern.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -75,6 +68,48 @@
     <TypeIdentifier>
       <HashCode>AAAAACAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
       <FileName>Nagruzka\Q.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.GeometryNamespase.Coordinate3D">
+    <Position X="12" Y="9.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAYAE=</HashCode>
+      <FileName>Geometry\Coordinate3D.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.GridNamespace.GridLayer">
+    <Position X="7.25" Y="9.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQBAAAAAAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Grid\GridLayer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.GridNamespace.GridLayerParameters">
+    <Position X="7" Y="12.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAgAAIAAEAAAAAAAAAEAAAgAIAAAAAAA=</HashCode>
+      <FileName>Grid\GridLayerParameters.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.GridNamespace.GridWithGeometryPreCalculated">
+    <Position X="0.5" Y="9.75" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAAAEAAAAAAAAAACAAQCAQAAAAAAAAEAA=</HashCode>
+      <FileName>Grid\GridWithGeometryPreCalculated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.GridNamespace.Grid">
+    <Position X="12.75" Y="2.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACABgQAAAAAACAAAAAAAAAgAA0AAAAAAAIAAAA=</HashCode>
+      <FileName>Grid\Grid.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.GridNamespace.GridLayers3D">
+    <Position X="4.5" Y="9.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAEAAAABQAAAAAAAAEAAAA=</HashCode>
+      <FileName>Grid\GridLayers3D.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Enum Name="ElasticityClassLibrary.AxisEnum">

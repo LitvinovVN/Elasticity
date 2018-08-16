@@ -1,4 +1,4 @@
-﻿using ElasticityClassLibrary.Geometry;
+﻿using ElasticityClassLibrary.GeometryNamespase;
 using System;
 using System.Collections.Generic;
 using System.Text;

@@ -1,6 +1,7 @@
 ﻿using System.Xml.Serialization;
+using ElasticityClassLibrary.GridNamespace;
 
-namespace ElasticityClassLibrary.Geometry
+namespace ElasticityClassLibrary.GeometryNamespase
 {
     /// <summary>
     /// Простейший элемент геометрии
@@ -18,6 +19,11 @@ namespace ElasticityClassLibrary.Geometry
         /// Координата расположения примитива внутри геометрии,
         /// т.е. относительно координаты расположения элемента
         /// </summary>
-        public abstract Coordinate3D CoordinateInElement { get; set; }                
+        public abstract Coordinate3D CoordinateInElement { get; set; }
+
+        /// <summary>
+        /// Возвращает объект со списками слоёв
+        /// </summary>
+        public abstract GridLayers3D GetGridLayers3D { get; }
     }
 }

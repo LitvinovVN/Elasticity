@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml.Serialization;
+using ElasticityClassLibrary.GridNamespace;
 
-namespace ElasticityClassLibrary.Geometry
+namespace ElasticityClassLibrary.GeometryNamespase
 {
     /// <summary>
     /// Геометрия моделируемого объекта
@@ -16,6 +17,20 @@ namespace ElasticityClassLibrary.Geometry
         /// Составные части моделируемого объекта 
         /// </summary>
         public List<GeometryElement> GeometryElements { get; set; } = new List<GeometryElement>();
+        public GridLayers3D GetGridLayers3D
+        {
+            get
+            {
+                GridLayers3D gridLayers3D = new GridLayers3D();
+
+                foreach (var geometryElement in GeometryElements)
+                {
+                    gridLayers3D.Merge(geometryElement.GetGridLayers3D);
+                }
+
+                return gridLayers3D;
+            }
+        }
 
         public Geometry()
         {

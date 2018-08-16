@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using ElasticityClassLibrary.GridNamespace;
 using ElasticityClassLibrary.NagruzkaNamespace;
 
-namespace ElasticityClassLibrary.Geometry
+namespace ElasticityClassLibrary.GeometryNamespase
 {
     /// <summary>
     /// Параллелепипед
@@ -11,15 +12,35 @@ namespace ElasticityClassLibrary.Geometry
     public class GeometryPrimitiveParallelepiped : GeometryPrimitive
     {
         #region Конструкторы
-        public GeometryPrimitiveParallelepiped(Coordinate3D coordinateInElement, decimal lengthX, decimal lengthY, decimal lengthZ, bool isCavity=false)
+        /// <summary>
+        /// Создаёт параллелепипед с заданными параметрами
+        /// </summary>
+        /// <param name="coordinateInElement">Координата угла параллелепипеда,
+        /// ближайшего к началу координат</param>
+        /// <param name="lengthX">Длина по оси X</param>
+        /// <param name="lengthY">Длина по оси Y</param>
+        /// <param name="lengthZ">Длина по оси Z</param>
+        /// <param name="isCavity">Флаг выреза / полости</param>
+        /// <param name="numLayersX">Кол-во слоёв YZ по оси X</param>
+        /// <param name="numLayersY">Кол-во слоёв XZ по оси Y</param>
+        /// <param name="numLayersZ">Кол-во слоёв XY по оси Z</param>
+        public GeometryPrimitiveParallelepiped(Coordinate3D coordinateInElement,
+            decimal lengthX,
+            decimal lengthY,
+            decimal lengthZ,
+            bool isCavity=false,
+            uint numLayersX=11,
+            uint numLayersY=11,
+            uint numLayersZ=11)
         {
             IsCavity = isCavity;
             CoordinateInElement = coordinateInElement;
             LengthX = lengthX;
             LengthY = lengthY;
             LengthZ = lengthZ;
+            SetGridLayers3D(numLayersX, numLayersY, numLayersZ);
         }
-
+        
         public GeometryPrimitiveParallelepiped()
         {
                 
@@ -60,24 +81,58 @@ namespace ElasticityClassLibrary.Geometry
         public decimal LengthZ { get; set; }
         #endregion
 
-        #region ?????????????????????????????????????Количество слоёв примитива??????????????
         /// <summary>
-        /// Количество слоёв YZ сетки,
-        /// рассекающих примитив по оси X
+        /// Объект со списками слоёв
         /// </summary>
-        public uint NumLayersX { get; set; }
+        public GridLayers3D GridLayers3D { get; set; } = new GridLayers3D();
 
         /// <summary>
-        /// Количество слоёв XZ сетки,
-        /// рассекающих примитив по оси Y
+        /// Возвращает объект со списками слоёв
         /// </summary>
-        public uint NumLayersY { get; set; }
+        public override GridLayers3D GetGridLayers3D
+        {
+            get
+            {
+                return GridLayers3D;
+            }
+        }
 
         /// <summary>
-        /// Количество слоёв XY сетки,
-        /// рассекающих примитив по оси Z
+        /// Заполняет список слоёв объекта
         /// </summary>
-        public uint NumLayersZ { get; set; }
-        #endregion
+        /// <param name="numLayersX">Количество слоёв по оси X</param>
+        /// <param name="numLayersY">Количество слоёв по оси Y</param>
+        /// <param name="numLayersZ">Количество слоёв по оси Z</param>
+        private void SetGridLayers3D(uint numLayersX,
+            uint numLayersY,
+            uint numLayersZ)
+        {
+            SetGridLayerList(GridLayers3D.GridLayersX, numLayersX, CoordinateInElement.X,LengthX);
+            SetGridLayerList(GridLayers3D.GridLayersY, numLayersY, CoordinateInElement.Y, LengthX);
+            SetGridLayerList(GridLayers3D.GridLayersZ, numLayersZ, CoordinateInElement.Z, LengthX);
+        }
+
+        /// <summary>
+        /// Вычисляет и заполняет список слоёв
+        /// по одной оси координат
+        /// </summary>
+        /// <param name="gridLayerList"></param>
+        /// <param name="numLayers"></param>
+        /// <param name="coordinate"></param>
+        /// <param name="length"></param>
+        private void SetGridLayerList(List<GridLayer> gridLayerList,
+            uint numLayers,
+            decimal coordinate,
+            decimal length)
+        {            
+            decimal step = length / (numLayers - 1);
+            for (uint index = 0; index < numLayers; index++)
+            {
+                GridLayer gridLayer = new GridLayer();
+                gridLayer.Index = index;
+                gridLayer.Coordinate = coordinate + index * step;
+                gridLayerList.Add(gridLayer);
+            }
+        }
     }
 }

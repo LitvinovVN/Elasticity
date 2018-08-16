@@ -1,6 +1,7 @@
 ﻿using System;
 using Xunit;
 using ElasticityClassLibrary;
+using ElasticityClassLibrary.GridNamespace;
 
 namespace ElasticityClassLibraryXUnitTests
 {

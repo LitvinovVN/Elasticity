@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ElasticityClassLibrary.Geometry
+namespace ElasticityClassLibrary.GeometryNamespase
 {
     /// <summary>
     /// Характеристика материала (модуль Юнга
