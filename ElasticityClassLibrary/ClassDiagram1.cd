@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ElasticityClassLibrary.Grid">
+    <Position X="12.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACABgQAAAAAACAAAAAAAAAgAA0AAAAAAAIAAAA=</HashCode>
+      <FileName>Grid.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.StepTransition">
+    <Position X="10.5" Y="2.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAABAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>StepTransition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.Geometry.Geometry">
+    <Position X="0.75" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABEAAAAAAAAAAAAAAAAQAAAAAAAAAAAEAA=</HashCode>
+      <FileName>Geometry\Geometry.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.Geometry.GeometryElement">
+    <Position X="3.5" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAEAAAAEAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Geometry\GeometryElement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.Geometry.GeometryPrimitive">
+    <Position X="4" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>Geometry\GeometryPrimitive.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.Geometry.GeometryPrimitiveParallelepiped">
+    <Position X="2.5" Y="5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AADAAgAAQAAAAAAAAABAAGABAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>Geometry\GeometryPrimitiveParallelepiped.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.Geometry.GeometryPrimitiveCube">
+    <Position X="4.75" Y="5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAABAAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>Geometry\GeometryPrimitiveCube.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.Geometry.MaterialCharacteristic">
+    <Position X="6.75" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAgEAAAA=</HashCode>
+      <FileName>Geometry\MaterialCharacteristic.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.NagruzkaNamespace.Nagruzka" Collapsed="true">
+    <Position X="9" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Nagruzka\Nagruzka.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.NagruzkaNamespace.NagruzkaRaspredRavnomern" Collapsed="true">
+    <Position X="8.25" Y="8.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>Nagruzka\NagruzkaRaspredRavnomern.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.NagruzkaNamespace.Q">
+    <Position X="11.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Nagruzka\Q.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="ElasticityClassLibrary.AxisEnum">
+    <Position X="12.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAE=</HashCode>
+      <FileName>AxisEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ElasticityClassLibrary.NodeLocationEnum">
+    <Position X="10.5" Y="0.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIACAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>NodeLocationEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

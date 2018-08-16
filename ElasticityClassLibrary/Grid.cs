@@ -88,6 +88,35 @@ namespace ElasticityClassLibrary
         /// <param name="CoordinateX">Координата X вставки слоя</param>
         public StepTransition InsertLayerX(decimal coordinate)
         {
+            return InsertLayer(AxisEnum.X, coordinate);
+        }
+
+        /// <summary>
+        /// Добавить слой сетки XZ в заданной координате Y
+        /// </summary>
+        /// <param name="coordinate"></param>
+        /// <returns></returns>
+        public StepTransition InsertLayerY(decimal coordinate)
+        {
+            return InsertLayer(AxisEnum.Y, coordinate);
+        }
+
+        /// <summary>
+        /// Добавить слой сетки XY в заданной координате Z
+        /// </summary>
+        /// <param name="coordinate"></param>
+        /// <returns></returns>
+        public StepTransition InsertLayerZ(decimal coordinate)
+        {
+            return InsertLayer(AxisEnum.Z, coordinate);
+        }
+
+        /// <summary>
+        /// Добавить слой сетки YZ в заданной координате X
+        /// </summary>
+        /// <param name="CoordinateX">Координата X вставки слоя</param>
+        public StepTransition InsertLayer(AxisEnum axis, decimal coordinate/*, int roundToNumSymbols=3*/)
+        {
             /* Вставку слоя моделируем добавлением правила
              * перехода шагов сетки по оси X с корректировкой смежных шагов
              * ----------i----------j-------K---l----------
@@ -101,33 +130,51 @@ namespace ElasticityClassLibrary
              *
              * Вставка
              */
-                         
+            //coordinate = decimal.Round(coordinate, roundToNumSymbols);
+
+            List<StepTransition> StepTransitionList;
+
+            switch (axis)
+            {
+                case AxisEnum.X:
+                    StepTransitionList = StepTransitionsX;
+                    break;
+                case AxisEnum.Y:
+                    StepTransitionList = StepTransitionsY;
+                    break;
+                case AxisEnum.Z:
+                    StepTransitionList = StepTransitionsZ;
+                    break;
+                default:
+                    throw new NotSupportedException("Попытка добавления слоя в несуществующей системе координат");                    
+            }
+
             StepTransition prevStepTransition = null;
-            StepTransition curStepTransition  = null;
+            StepTransition curStepTransition = null;
             StepTransition nextStepTransition = null;
 
             int? prevStepTransitionListIndex = null;
             int? nextStepTransitionListIndex = null;
-            for (int i=0; i<=StepTransitionsX.Count; i++)
+            for (int i = 0; i <= StepTransitionList.Count; i++)
             {
                 // Если переданная координата совпадает с существующим переходом,
                 // новый переход не создаём, а возвращаем существующий
-                if(StepTransitionsX[i].Coordinate == coordinate)
+                if (StepTransitionList[i].Coordinate == coordinate)
                 {
-                    return StepTransitionsX[i];
+                    return StepTransitionList[i];
                 }
 
                 // Поиск первого перехода, координата которого
                 // превышает переданное значение
-                if(StepTransitionsX[i].Coordinate > coordinate)
+                if (StepTransitionList[i].Coordinate > coordinate)
                 {
                     // Определяем индексы переходов слева и справа
                     nextStepTransitionListIndex = i;
-                    nextStepTransition = StepTransitionsX[i];
+                    nextStepTransition = StepTransitionList[i];
                     if (i > 0)
                     {
                         prevStepTransitionListIndex = i - 1;
-                        prevStepTransition = StepTransitionsX[i-1];
+                        prevStepTransition = StepTransitionList[i - 1];
                     }
                     break;
                 }
@@ -144,121 +191,112 @@ namespace ElasticityClassLibrary
             if (nextStepTransitionListIndex == null) return null;
 
             // Обработка 1 варианта: новый слой расположен до первого перехода
-            if(prevStepTransitionListIndex==null)
+            if (prevStepTransitionListIndex == null)
             {
-                //// Определяем существующие предыдущий и последующий слои около добавляемого слоя
-                // Шаг сетки до правого перехода
-                decimal oldStep = nextStepTransition.StepValue;
-
-                // Если координата добавляемого узла меньше существующего шага сетки,
-                // значит добавляемый узел будет первым после 0-го узла
-                if(coordinate < oldStep)
-                {
-                    // Добавляем переходы в добавляемой координате
-                    // и переход в существующем слое справа от добавляемого
-                    // (если он уже есть, то не добавляем)
-                    int position = 0;           // Позиция вставки в списке                    
-                    var newItem  = new StepTransition(1, coordinate, coordinate);
-                    var rightItem = new StepTransition(2, oldStep - coordinate, oldStep);
-                    if (nextStepTransition.Coordinate == rightItem.Coordinate)
-                    {
-                        // Переход справа уже есть.
-                        // Добавляем только новый.
-                        StepTransitionsX.Insert(position, newItem);
-                        // Исправляем шаг в существующем правом переходе
-                        nextStepTransition.StepValue = nextStepTransition.Coordinate - newItem.Coordinate;
-                    }
-                    else
-                    {
-                        StepTransitionsX.InsertRange(position, new List<StepTransition> { newItem, rightItem });                        
-                    }
-
-                    // Корректируем индексы в списке переходов
-                    CorrectIndexesInStepTransition(StepTransitionsX);
-
-                    return StepTransitionsX[position];
-                }
+                prevStepTransition = new StepTransition(0, 0, 0);
             }
 
-            // Обработка 2 варианта: новый слой расположен между существующими переходами
-            if (prevStepTransitionListIndex>=0)
+            // Обработка 2 варианта: новый слой расположен между существующими переходами            
+
+            // Добавление слоя
+            // Определяем слои слева и справа от места вставки.
+            // Возможны 4 варианта:
+            // 1) добавляемый слой совпадает с существующим - ничего не делаем
+            // 2) левый слой - переход
+            // 3) левый и правый слои - не переходы
+            // 4) правый слой - переход
+            StepTransition prevLayer = new StepTransition();
+            StepTransition nextLayer = new StepTransition();
+
+            // Расстояние от левого перехода до координаты добавляемого слоя
+            decimal d = coordinate - prevStepTransition.Coordinate;
+            // Количество слоёв от левого перехода до координаты
+            decimal dLayers = d / nextStepTransition.StepValue;
+            uint dLayersUINT = (uint)Decimal.Truncate(dLayers);
+            // Детектор совпадения координаты добавляемого слоя с имеющимися
+            decimal sovpadenie = d % nextStepTransition.StepValue;
+
+            // 1 вариант. Добавляемый слой совпадает с существующим - ничего не делаем
+            if (sovpadenie == 0m) return null;
+
+            // 2 вариант. Левый слой - переход
+            // - добавляем текущий переход по переданной координате
+            if (dLayers < 1)
             {
-                // Определяем слои слева и справа от места вставки.
-                // Возможны 4 варианта:
-                // 1) добавляемый слой совпадает с существующим - ничего не делаем
-                // 2) левый слой - переход
-                // 3) левый и правый слои - не переходы
-                // 4) правый слой - переход
-                StepTransition prevLayer = new StepTransition();
-                StepTransition nextLayer = new StepTransition();
+                prevLayer = prevStepTransition;
+                curStepTransition = new StepTransition(prevLayer.Index + 1,
+                    coordinate - prevLayer.Coordinate,
+                    coordinate);                
+                nextLayer = new StepTransition(curStepTransition.Index + 1,
+                    prevLayer.Coordinate + nextStepTransition.StepValue - coordinate,
+                    prevLayer.Coordinate + nextStepTransition.StepValue);
 
-                // Расстояние от левого перехода до координаты добавляемого слоя
-                decimal d = coordinate - prevStepTransition.Coordinate;
-                // Количество слоёв от левого перехода до координаты
-                decimal dLayers = d / nextStepTransition.StepValue;
-                uint dLayersUINT = (uint)Decimal.Truncate(dLayers);
-                // Детектор совпадения координаты добавляемого слоя с имеющимися
-                decimal sovpadenie = d % nextStepTransition.StepValue;
-
-                // 1 вариант. Добавляемый слой совпадает с существующим - ничего не делаем
-                if (sovpadenie == 0m) return null;
-
-                // 2 вариант. Левый слой - переход
-                // - добавляем текущий переход по переданной координате
-                if (dLayers < 1)
+                // Правый слой может оказаться переходом!
+                if(nextLayer.Coordinate==nextStepTransition.Coordinate)
                 {
-                    prevLayer = prevStepTransition;
-                    curStepTransition = new StepTransition(prevLayer.Index+1,
-                        coordinate - prevLayer.Coordinate,
-                        coordinate);
-                    nextLayer = new StepTransition(curStepTransition.Index + 1,
-                        prevLayer.Coordinate + nextStepTransition.StepValue - coordinate,
-                        prevLayer.Coordinate + nextStepTransition.StepValue);
-                    StepTransitionsX.InsertRange((int)nextStepTransitionListIndex,
-                        new List<StepTransition> { curStepTransition, nextLayer });
-                    IncreaseIndexesInStepTransition(StepTransitionsX, nextLayer.Index+1, 1);
-                    return curStepTransition;
+                    StepTransitionList.Insert((int)nextStepTransitionListIndex,
+                    curStepTransition);
+                    nextStepTransition.Coordinate = nextLayer.Coordinate;
+                    nextStepTransition.Index = nextLayer.Index;
+                    nextStepTransition.StepValue = nextLayer.StepValue;
+
+                    if (curStepTransition.Index==1)
+                    {
+                        CorrectIndexesInStepTransition(StepTransitionList);
+                    }
+                    else if(nextStepTransition.Index!=StepTransitionList[StepTransitionList.Count-1].Index)
+                    {
+                        IncreaseIndexesInStepTransition(StepTransitionList, nextLayer.Index, 1);
+                    }
+                    
                 }
-
-                // 3) левый и правый слои - не переходы
-                if(dLayers < ((nextStepTransition.Coordinate-prevStepTransition.Coordinate)/nextStepTransition.StepValue-1))
-                {
-                    prevLayer = new StepTransition(prevStepTransition.Index + dLayersUINT,
-                        nextStepTransition.StepValue,
-                        prevStepTransition.Coordinate + nextStepTransition.StepValue * dLayersUINT);
-                    curStepTransition = new StepTransition(prevLayer.Index + 1,
-                        coordinate - prevLayer.Coordinate,
-                        coordinate);                    
-                    nextLayer = new StepTransition(curStepTransition.Index + 1,
-                        prevLayer.Coordinate + nextStepTransition.StepValue - coordinate,
-                        prevLayer.Coordinate + nextStepTransition.StepValue);
-
-                    StepTransitionsX.InsertRange((int)nextStepTransitionListIndex,
-                        new List<StepTransition> { prevLayer, curStepTransition, nextLayer });
-                    IncreaseIndexesInStepTransition(StepTransitionsX, nextLayer.Index + 1, 1);
-                    return curStepTransition;
-                }// 4) правый слой - переход
                 else
                 {
-                    prevLayer = new StepTransition(prevStepTransition.Index + dLayersUINT,
-                        nextStepTransition.StepValue,
-                        prevStepTransition.Coordinate + nextStepTransition.StepValue * dLayersUINT);
-                    curStepTransition = new StepTransition(prevLayer.Index + 1,
-                        coordinate - prevLayer.Coordinate,
-                        coordinate);
-                    nextLayer = nextStepTransition;
-                    nextLayer.Index++;
-                    nextLayer.StepValue = nextLayer.Coordinate - curStepTransition.Coordinate;
-
-
-                    StepTransitionsX.InsertRange((int)nextStepTransitionListIndex,
-                        new List<StepTransition> { prevLayer, curStepTransition });
-                    IncreaseIndexesInStepTransition(StepTransitionsX, nextLayer.Index + 1, 1);
-                    return curStepTransition;
+                    StepTransitionList.InsertRange((int)nextStepTransitionListIndex,
+                    new List<StepTransition> { curStepTransition, nextLayer });
+                    IncreaseIndexesInStepTransition(StepTransitionList, nextLayer.Index + 1, 1);
                 }
+
+                
+                return curStepTransition;
             }
 
-            return null;
+            // 3) левый и правый слои - не переходы
+            if (dLayers < ((nextStepTransition.Coordinate - prevStepTransition.Coordinate) / nextStepTransition.StepValue - 1))
+            {
+                prevLayer = new StepTransition(prevStepTransition.Index + dLayersUINT,
+                    nextStepTransition.StepValue,
+                    prevStepTransition.Coordinate + nextStepTransition.StepValue * dLayersUINT);
+                curStepTransition = new StepTransition(prevLayer.Index + 1,
+                    coordinate - prevLayer.Coordinate,
+                    coordinate);
+                nextLayer = new StepTransition(curStepTransition.Index + 1,
+                    prevLayer.Coordinate + nextStepTransition.StepValue - coordinate,
+                    prevLayer.Coordinate + nextStepTransition.StepValue);
+
+                StepTransitionList.InsertRange((int)nextStepTransitionListIndex,
+                    new List<StepTransition> { prevLayer, curStepTransition, nextLayer });
+                IncreaseIndexesInStepTransition(StepTransitionList, nextLayer.Index + 1, 1);
+                return curStepTransition;
+            }// 4) правый слой - переход
+            else
+            {
+                prevLayer = new StepTransition(prevStepTransition.Index + dLayersUINT,
+                    nextStepTransition.StepValue,
+                    prevStepTransition.Coordinate + nextStepTransition.StepValue * dLayersUINT);
+                curStepTransition = new StepTransition(prevLayer.Index + 1,
+                    coordinate - prevLayer.Coordinate,
+                    coordinate);
+                nextLayer = nextStepTransition;
+                nextLayer.Index++;
+                nextLayer.StepValue = nextLayer.Coordinate - curStepTransition.Coordinate;
+
+
+                StepTransitionList.InsertRange((int)nextStepTransitionListIndex,
+                    new List<StepTransition> { prevLayer, curStepTransition });
+                IncreaseIndexesInStepTransition(StepTransitionList, nextLayer.Index + 1, 1);
+                return curStepTransition;
+            }            
         }
 
         /// <summary>
@@ -298,6 +336,13 @@ namespace ElasticityClassLibrary
                 stepTransitionList[i].Index = index;
             }
         }
+
+        public void CorrectIndexes()
+        {
+            CorrectIndexesInStepTransition(StepTransitionsX);
+            CorrectIndexesInStepTransition(StepTransitionsY);
+            CorrectIndexesInStepTransition(StepTransitionsZ);
+        }
         #endregion
 
 
@@ -311,29 +356,43 @@ namespace ElasticityClassLibrary
             bool IsCorrect = true;
 
             #region Габаритные размеры должны соответствовать расчитанным по правилам разбиения по осям 
-            decimal sizeX = 0;
-            foreach (var step in StepTransitionsX)
-            {
-                sizeX += step.Index * step.StepValue;
-            }
-            if (sizeX != GridSizeX) IsCorrect = false;
 
-            decimal sizeY = 0;
-            foreach (var step in StepTransitionsY)
-            {
-                sizeY += step.Index * step.StepValue;
-            }
-            if (sizeY != GridSizeY) IsCorrect = false;
+            decimal GridSizeXCalculated = StepTransitionListCalculateCoordinatesValidity(StepTransitionsX);
+            if (GridSizeXCalculated != GridSizeX) IsCorrect = false;
 
-            decimal sizeZ = 0;
-            foreach (var step in StepTransitionsZ)
-            {
-                sizeZ += step.Index * step.StepValue;
-            }
-            if (sizeZ != GridSizeZ) IsCorrect = false;
+            decimal GridSizeYCalculated = StepTransitionListCalculateCoordinatesValidity(StepTransitionsY);
+            if (GridSizeYCalculated != GridSizeY) IsCorrect = false;
+
+            decimal GridSizeZCalculated = StepTransitionListCalculateCoordinatesValidity(StepTransitionsZ);
+            if (GridSizeZCalculated != GridSizeZ) IsCorrect = false;
             #endregion
 
             return IsCorrect;
+        }
+
+        /// <summary>
+        /// Вычисляет размер по списку переходов
+        /// </summary>
+        /// <param name="StepTransitionList"></param>
+        /// <returns></returns>
+        private decimal StepTransitionListCalculateCoordinatesValidity(List<StepTransition> StepTransitionList)
+        {
+            StepTransition prevStep = null;
+            decimal size = 0;
+            foreach (var step in StepTransitionList)
+            {
+                if (prevStep != null)
+                {
+                    size += (step.Index - prevStep.Index) * step.StepValue;
+                }
+                else
+                {
+                    size += step.Index * step.StepValue;
+                }
+
+                prevStep = step;
+            }
+            return size;
         }
         #endregion
     }
