@@ -1,4 +1,4 @@
-﻿namespace ElasticityClassLibrary
+﻿namespace ElasticityClassLibrary.GridNamespace
 {
     /// <summary>
     /// Модель перехода шага сетки

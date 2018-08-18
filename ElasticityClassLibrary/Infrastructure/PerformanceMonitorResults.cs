@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ElasticityClassLibrary
+namespace ElasticityClassLibrary.Infrastructure
 {
     /// <summary>
     /// Результат работы монитора производительности

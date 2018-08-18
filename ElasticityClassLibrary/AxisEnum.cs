@@ -1,4 +1,4 @@
-﻿namespace ElasticityClassLibrary
+﻿namespace ElasticityClassLibrary.Infrastructure
 {
     /// <summary>
     /// Перечисление осей координат сетки

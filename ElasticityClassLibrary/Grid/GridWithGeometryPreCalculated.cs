@@ -26,14 +26,25 @@ namespace ElasticityClassLibrary.GridNamespace
         public GridWithGeometryPreCalculated(Grid grid, Geometry geometry)
         {
             GenerateLayersFromGridAndGeometry(grid, geometry);
-        } 
-
+            CalculateGridLayers3DParamaters();
+        }
+                
         public GridWithGeometryPreCalculated()
         {
 
         }
         #endregion
 
+        /// <summary>
+        /// Рассчитывает параметры (GridLayerParameters)
+        /// для свойства GridLayers3D
+        /// </summary>
+        private void CalculateGridLayers3DParamaters()
+        {
+            GridLayers3D.CalculateGridLayers3DParameters();
+        }
+
+       
 
         #region Генерирование слоёв
         /// <summary>

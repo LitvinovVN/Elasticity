@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ElasticityClassLibrary
+namespace ElasticityClassLibrary.Infrastructure
 {
     /// <summary>
     /// Методы расширения

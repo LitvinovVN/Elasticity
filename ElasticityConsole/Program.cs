@@ -1,6 +1,7 @@
 ﻿using ElasticityClassLibrary;
 using ElasticityClassLibrary.GeometryNamespase;
 using ElasticityClassLibrary.GridNamespace;
+using ElasticityClassLibrary.Infrastructure;
 using ElasticityClassLibrary.NagruzkaNamespace;
 using System;
 using System.Collections.Generic;

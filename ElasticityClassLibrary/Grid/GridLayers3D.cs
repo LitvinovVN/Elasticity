@@ -165,5 +165,98 @@ namespace ElasticityClassLibrary.GridNamespace
             }
             return gridLayerListResult;
         }
+
+        /// <summary>
+        /// Вычисляет параметры сетки для всех наборов слоёв
+        /// </summary>
+        public void CalculateGridLayers3DParameters()
+        {
+            CalculateGridLayerParameters(GridLayersX);
+            CalculateGridLayerParameters(GridLayersY);
+            CalculateGridLayerParameters(GridLayersZ);
+        }
+
+        /// <summary>
+        /// Вычисляет параметры сетки для переданного наборов слоёв
+        /// </summary>
+        /// <param name="gridLayerList"></param>
+        private void CalculateGridLayerParameters(List<GridLayer> gridLayerList)
+        {
+            if (gridLayerList == null) return;
+            uint gridLayersCount = (uint)gridLayerList.Count;
+            if (gridLayersCount < 7) return;
+
+            GridLayer backwards3Layer;
+            GridLayer backwards2Layer;
+            GridLayer backwards1Layer;
+            GridLayer currentLayer;
+            GridLayer forwards1Layer;
+            GridLayer forwards2Layer;
+            GridLayer forwards3Layer;
+
+            for (int i=0; i < gridLayersCount; i++)
+            {
+                #region Инициализация слоёв на данной итерации
+                if ((i - 3) < 0)
+                {
+                    backwards3Layer = null;
+                }
+                else
+                {
+                    backwards3Layer = gridLayerList[i-3];
+                }
+
+                if ((i - 2) < 0)
+                {
+                    backwards2Layer = null;
+                }
+                else
+                {
+                    backwards2Layer = gridLayerList[i-2];
+                }
+
+                if ((i - 1) < 0)
+                {
+                    backwards1Layer = null;
+                }
+                else
+                {
+                    backwards1Layer = gridLayerList[i - 1];
+                }
+
+                currentLayer = gridLayerList[i];
+
+                if ((i + 1) >= gridLayersCount)
+                {
+                    forwards1Layer = null;
+                }
+                else
+                {
+                    forwards1Layer = gridLayerList[i + 1];
+                }
+
+                if ((i + 2) >= gridLayersCount)
+                {
+                    forwards2Layer = null;
+                }
+                else
+                {
+                    forwards2Layer = gridLayerList[i + 2];
+                }
+
+                if ((i + 3) >= gridLayersCount)
+                {
+                    forwards3Layer = null;
+                }
+                else
+                {
+                    forwards3Layer = gridLayerList[i + 3];
+                }
+                #endregion
+
+                GridLayerParameters glp = new GridLayerParameters(backwards3Layer, backwards2Layer, backwards1Layer, currentLayer, forwards1Layer, forwards2Layer, forwards3Layer);
+                gridLayerList[i].GridLayerParameters = glp;
+            }
+        }
     }
 }
