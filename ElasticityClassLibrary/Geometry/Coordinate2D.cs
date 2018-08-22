@@ -3,14 +3,13 @@
 namespace ElasticityClassLibrary.GeometryNamespase
 {
     /// <summary>
-    /// Координата в трёхмерной системе
+    /// Координата в двумерной системе
     /// </summary>
     [Serializable]
-    public class Coordinate3D : Coordinate
+    public class Coordinate2D : Coordinate
     {
         public decimal X { get; set; }
-        public decimal Y { get; set; }
-        public decimal Z { get; set; }
+        public decimal Y { get; set; }        
 
         /// <summary>
         /// Строковое представление координаты
@@ -19,21 +18,20 @@ namespace ElasticityClassLibrary.GeometryNamespase
         {
             get
             {
-                return $"[{X},{Y},{Z}]"; 
+                return $"[{X},{Y}]"; 
             }
         }
 
         #region Конструкторы
-        public Coordinate3D()
+        public Coordinate2D()
         {
 
         }
 
-        public Coordinate3D(decimal x, decimal y, decimal z)
+        public Coordinate2D(decimal x, decimal y)
         {
             X = x;
-            Y = y;
-            Z = z;
+            Y = y;            
         }
         #endregion
 
@@ -44,9 +42,9 @@ namespace ElasticityClassLibrary.GeometryNamespase
         /// <param name="y"></param>
         /// <param name="z"></param>
         /// <returns></returns>
-        public static Coordinate3D Create(decimal x, decimal y, decimal z)
+        public static Coordinate2D Create(decimal x, decimal y)
         {
-            return new Coordinate3D(x, y, z);
+            return new Coordinate2D(x, y);
         }
     }
 }

@@ -31,7 +31,7 @@
   <Class Name="ElasticityClassLibrary.Derivatives.DerivativeOperator1D3P" Collapsed="true">
     <Position X="1.5" Y="3.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAACAAEAAAAAAAAYAQCAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Derivatives\DerivativeOperator1D3P.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -47,6 +47,13 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Derivatives\DerivativeOperator1D7P.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.Derivatives.Derivative" Collapsed="true">
+    <Position X="1.75" Y="0.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Derivatives\Derivative.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

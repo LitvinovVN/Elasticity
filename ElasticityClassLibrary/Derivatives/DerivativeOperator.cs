@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 namespace ElasticityClassLibrary.Derivatives
 {
     /// <summary>
-    /// Оператор для вычисления производной
+    /// Оператор для вычисления производной (абстрактный класс)
     /// </summary>
     [XmlInclude(typeof(DerivativeOperator1D))]
     [XmlInclude(typeof(DerivativeOperator2D))]

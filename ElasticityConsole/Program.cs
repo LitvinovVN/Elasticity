@@ -1,8 +1,10 @@
 ﻿using ElasticityClassLibrary;
+using ElasticityClassLibrary.Derivatives;
 using ElasticityClassLibrary.GeometryNamespase;
 using ElasticityClassLibrary.GridNamespace;
 using ElasticityClassLibrary.Infrastructure;
 using ElasticityClassLibrary.NagruzkaNamespace;
+using ElasticityClassLibrary.SolverNamespase;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,6 +25,7 @@ namespace ElasticityConsole
                 Console.WriteLine("2. GridInsertionsRandom();");
                 Console.WriteLine("3. GeometryParallelepipedTests();");
                 Console.WriteLine("4. GridWithGeometryPreCalculatedTests();");
+                Console.WriteLine("5. SolverTask1DTests();");
                 key = Console.ReadKey(true).KeyChar;
                 Console.Clear();
 
@@ -40,13 +43,17 @@ namespace ElasticityConsole
                     case '4':
                         GridWithGeometryPreCalculatedTests();
                         break;
+                    case '5':
+                        SolverTask1DTests();
+                        break;
                 }
+                ////////////////////////////            
+                WaitForUserClickAnyButton();
             }
             while ( key!='q' && key!='й');
                        
         }
-              
-
+               
 
         #region Вспомогательные методы
         /// <summary>
@@ -144,10 +151,7 @@ namespace ElasticityConsole
                 formatter.Serialize(fs, grid);
 
                 Console.WriteLine("Объект сериализован");
-            }
-
-            ////////////////////////////
-            WaitForUserClickAnyButton();
+            }            
         }
 
 
@@ -187,10 +191,7 @@ namespace ElasticityConsole
                 formatter.Serialize(fs, grid);
 
                 Console.WriteLine("Объект сериализован");
-            }
-
-            ////////////////////////////
-            WaitForUserClickAnyButton();
+            }            
         }
 
         /// <summary>
@@ -222,8 +223,6 @@ namespace ElasticityConsole
             Console.WriteLine("Сериализация объекта: {0}", geometry.ExportToXML("", "GeometryParallelepiped.xml"));
             Geometry g2 = Geometry.ImportFromXML("", "GeometryParallelepiped.xml");
             Console.WriteLine("Проверка на равенство серализованного и десериализованного объектов: {0}", Geometry.IsGeometryValuesEquals(geometry, g2));            
-            ////////////////////////////
-            WaitForUserClickAnyButton();
         }
 
         /// <summary>
@@ -243,9 +242,138 @@ namespace ElasticityConsole
             /////////////////////////            
             Console.WriteLine("Сериализация объекта GridWithGeometryPreCalculated: {0}", gridWithGeometryPreCalculated.ExportToXML("", "GridWithGeometryPreCalculated.xml"));
             GridWithGeometryPreCalculated g2 = GridWithGeometryPreCalculated.ImportFromXML("", "GridWithGeometryPreCalculated.xml");
-            //Console.WriteLine("Проверка на равенство серализованного и десериализованного объектов: {0}", GridWithGeometryPreCalculated.IsGridWithGeometryPreCalculatedValuesEquals(gridWithGeometryPreCalculated, g2));
-            ////////////////////////////            
-            WaitForUserClickAnyButton();
+            //Console.WriteLine("Проверка на равенство серализованного и десериализованного объектов: {0}", GridWithGeometryPreCalculated.IsGridWithGeometryPreCalculatedValuesEquals(gridWithGeometryPreCalculated, g2));           
+        }
+
+        /// <summary>
+        /// Исследование характеристик работы решателя одномерных задач
+        /// </summary>
+        private static void SolverTask1DTests()
+        {
+            // Задаём дифференциальный оператор
+            var op = new DerivativeOperator1D3P();
+            op.Kim1 = - 1m / (2m * 0.5m);
+            op.Ki   =   2m;
+            op.Kip1 =   1m / (2m * 0.5m);
+
+            #region Создаём узлы одномерной сетки с известными значениями на границах
+            var task1DNodes = new List<Node>();
+            Node node0 = new Node
+            {
+                NodeLocationEnum = NodeLocationEnum.Outer,
+                Index = 0,
+                Coordinate = new Coordinate1D(0m),
+                NodeValue = null,
+                DerivativeOperator = null                
+            };
+            task1DNodes.Add(node0);
+
+            Node node1 = new Node
+            {
+                NodeLocationEnum = NodeLocationEnum.Outer,
+                Index = 1,
+                Coordinate = new Coordinate1D(0.5m),
+                NodeValue = null,
+                DerivativeOperator = null
+            };
+            task1DNodes.Add(node1);
+                        
+            Node node2 = new Node
+            {
+                NodeLocationEnum = NodeLocationEnum.OnTheSurface,
+                Index = 2,
+                Coordinate = new Coordinate1D(1m),
+                NodeValue = new NodeValueConst { Value = 10 },
+                DerivativeOperator = null
+            };
+            task1DNodes.Add(node2);
+
+            Node node3 = new Node
+            {
+                NodeLocationEnum = NodeLocationEnum.Internal,
+                Index = 3,
+                Coordinate = new Coordinate1D(1.5m),
+                NodeValue = new NodeValueRequired(),
+                DerivativeOperator = op
+            };
+            task1DNodes.Add(node3);
+
+            Node node4 = new Node
+            {
+                NodeLocationEnum = NodeLocationEnum.Internal,
+                Index = 4,
+                Coordinate = new Coordinate1D(2.0m),
+                NodeValue = new NodeValueRequired(),
+                DerivativeOperator = op
+            };
+            task1DNodes.Add(node4);
+
+            Node node5 = new Node
+            {
+                NodeLocationEnum = NodeLocationEnum.Internal,
+                Index = 5,
+                Coordinate = new Coordinate1D(2.5m),
+                NodeValue = new NodeValueRequired(),
+                DerivativeOperator = op
+            };
+            task1DNodes.Add(node5);
+
+            Node node6 = new Node
+            {
+                NodeLocationEnum = NodeLocationEnum.Internal,
+                Index = 6,
+                Coordinate = new Coordinate1D(3.0m),
+                NodeValue = new NodeValueRequired(),
+                DerivativeOperator = op
+            };
+            task1DNodes.Add(node6);
+
+            Node node7 = new Node
+            {
+                NodeLocationEnum = NodeLocationEnum.Internal,
+                Index = 7,
+                Coordinate = new Coordinate1D(3.5m),
+                NodeValue = new NodeValueRequired(),
+                DerivativeOperator = op
+            };
+            task1DNodes.Add(node7);
+
+            Node node8 = new Node
+            {
+                NodeLocationEnum = NodeLocationEnum.OnTheSurface,
+                Index = 8,
+                Coordinate = new Coordinate1D(4.0m),
+                NodeValue = new NodeValueConst { Value = 5 },
+                DerivativeOperator = null
+            };
+            task1DNodes.Add(node8);
+
+            Node node9 = new Node
+            {
+                NodeLocationEnum = NodeLocationEnum.Outer,
+                Index = 9,
+                Coordinate = new Coordinate1D(4.5m),
+                NodeValue = null,
+                DerivativeOperator = null
+            };
+            task1DNodes.Add(node9);
+
+            Node node10 = new Node
+            {
+                NodeLocationEnum = NodeLocationEnum.Outer,
+                Index = 10,
+                Coordinate = new Coordinate1D(5.0m),
+                NodeValue = null,
+                DerivativeOperator = null
+            };
+            task1DNodes.Add(node10);
+            #endregion
+
+            // Создаём задачу
+            var task = new SolverTask1D();
+            task.NodeList = task1DNodes;
+
+            SolverResult result = Solver.Calculate(task);
         }
     }
 }

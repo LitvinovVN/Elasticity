@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ElasticityClassLibrary.NagruzkaNamespace.Nagruzka" Collapsed="true">
+    <Position X="6.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Nagruzka\Nagruzka.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.NagruzkaNamespace.NagruzkaRaspredRavnomern">
+    <Position X="6" Y="2.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAgAAA=</HashCode>
+      <FileName>Nagruzka\NagruzkaRaspredRavnomern.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.NagruzkaNamespace.Q">
+    <Position X="3.25" Y="3.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Nagruzka\Q.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.NagruzkaNamespace.Area" Collapsed="true">
+    <Position X="9.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Nagruzka\Area.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.NagruzkaNamespace.AreaRectangle" Collapsed="true">
+    <Position X="9.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>Nagruzka\AreaRectangle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
