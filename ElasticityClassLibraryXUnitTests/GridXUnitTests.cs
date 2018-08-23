@@ -11,10 +11,10 @@ namespace ElasticityClassLibraryXUnitTests
         public void GridCreating()
         {
             // Подготовка
-            var Grid1 = new Grid(10, 10, 10, 10, 10, 10);
+            var Grid1 = new Grid3D(10, 10, 10, 10, 10, 10);
 
             // Действие
-            var Grid2 = new Grid(10, 10, 10, 10, 10, 10);
+            var Grid2 = new Grid3D(10, 10, 10, 10, 10, 10);
 
             // Проверка
             Assert.Equal(Grid1.GridSizeX, Grid2.GridSizeX);

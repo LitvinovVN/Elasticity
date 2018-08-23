@@ -4,32 +4,29 @@ using ElasticityClassLibrary.GridNamespace;
 namespace ElasticityClassLibrary.GeometryNamespase
 {
     /// <summary>
-    /// Простейший элемент геометрии
-    /// </summary>    
-    [XmlInclude(typeof(GeometryPrimitive1D))]
-    [XmlInclude(typeof(GeometryPrimitive2D))]
-    [XmlInclude(typeof(GeometryPrimitive3D))]
-    public abstract class GeometryPrimitive
+    /// Двумерные элементы геометрии
+    /// </summary>        
+    public abstract class GeometryPrimitive2D : GeometryPrimitive
     {
         /// <summary>
-        /// Количество измерений объекта
+        /// Количество измерений
         /// </summary>
-        public abstract NumberOfDimensionsEnum NumberOfDimensionsEnum {get;set;}
+        public override NumberOfDimensionsEnum NumberOfDimensionsEnum { get; set; } = NumberOfDimensionsEnum.D2;
 
         /// <summary>
         /// Полость (вырез)
         /// </summary>
-        public abstract bool IsCavity { get; set; }
+        //public abstract bool IsCavity { get; set; }
 
         /// <summary>
         /// Координата расположения примитива внутри геометрии,
         /// т.е. относительно координаты расположения элемента
         /// </summary>
-        public abstract Coordinate CoordinateInElement { get; set; }
+        //public abstract Coordinate1D CoordinateInElement { get; set; }
 
         /// <summary>
         /// Возвращает объект со списками слоёв
         /// </summary>
-        public abstract GridLayers GetGridLayers { get; }
+        public abstract GridLayers1D GetGridLayers2D { get; }
     }
 }

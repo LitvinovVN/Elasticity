@@ -1,45 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="ElasticityClassLibrary.GridNamespace.Grid">
-    <Position X="2" Y="0.5" Width="2.25" />
+  <Class Name="ElasticityClassLibrary.GridNamespace.Grid3D">
+    <Position X="3.5" Y="2.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAACABgQAAAAAACAAAAAAAAAgAA0AAAAAAAIAAAA=</HashCode>
-      <FileName>Grid\Grid.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="ElasticityClassLibrary.GridNamespace.GridLayer">
-    <Position X="10.5" Y="5.25" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAQBAAAAAAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
-      <FileName>Grid\GridLayer.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="ElasticityClassLibrary.GridNamespace.GridLayerParameters">
-    <Position X="12.75" Y="2" Width="2.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAACAACQAAABgABAAAAQAAACEAAgAABkAAAAI=</HashCode>
-      <FileName>Grid\GridLayerParameters.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="ElasticityClassLibrary.GridNamespace.GridLayers3D">
-    <Position X="8.25" Y="4" Width="2" />
-    <TypeIdentifier>
-      <HashCode>IIAAAAAAAAAAAAAAAAAAAAAEAAAAhQAAAAAAAAEAAAA=</HashCode>
-      <FileName>Grid\GridLayers3D.cs</FileName>
+      <FileName>Grid\Grid3D.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ElasticityClassLibrary.GridNamespace.GridWithGeometryPreCalculated">
-    <Position X="4.5" Y="3.25" Width="3.5" />
+    <Position X="9.75" Y="2.5" Width="3.5" />
     <TypeIdentifier>
       <HashCode>ACAAAAAAAAAAAAEAAAAAAAAAACAAwCAQAAAAAAAAEAA=</HashCode>
       <FileName>Grid\GridWithGeometryPreCalculated.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ElasticityClassLibrary.GridNamespace.StepTransition">
-    <Position X="4.5" Y="0.5" Width="2.5" />
+    <Position X="6.25" Y="4" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAABAAAAAAAAAAAABAAAAAAAAEAAAAAAAA=</HashCode>
       <FileName>Grid\StepTransition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.GridNamespace.Grid1D">
+    <Position X="0.5" Y="2.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAgAAACEAgQAAAAAACAAAAAAAAAgAAAAAAABAAIAAAA=</HashCode>
+      <FileName>Grid\Grid1D.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.GridNamespace.Grid">
+    <Position X="1.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Grid\Grid.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

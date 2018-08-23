@@ -9,7 +9,7 @@ namespace ElasticityClassLibrary.GeometryNamespase
     /// Параллелепипед
     /// </summary>
     [Serializable]
-    public class GeometryPrimitiveCube : GeometryPrimitive
+    public class GeometryPrimitiveCube : GeometryPrimitiveParallelepiped
     {
         #region Конструкторы
         public GeometryPrimitiveCube(Coordinate3D coordinateInElement, decimal length, bool isCavity=false)
@@ -34,7 +34,7 @@ namespace ElasticityClassLibrary.GeometryNamespase
         /// Координата расположения примитива внутри геометрии,
         /// т.е. относительно координаты расположения элемента
         /// </summary>
-        public override Coordinate3D CoordinateInElement { get; set; }
+        public override Coordinate3D CoordinateInElement3D { get; set; }
 
         #region Геометрические размеры примитива
         /// <summary>
@@ -46,6 +46,6 @@ namespace ElasticityClassLibrary.GeometryNamespase
         /// <summary>
         /// Возвращает объект со списками слоёв
         /// </summary>
-        public override GridLayers3D GetGridLayers3D => throw new NotImplementedException();
+        public override GridLayers3D GetGridLayers3D => null;
     }
 }

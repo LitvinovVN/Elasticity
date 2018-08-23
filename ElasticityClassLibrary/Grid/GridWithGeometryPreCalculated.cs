@@ -23,7 +23,7 @@ namespace ElasticityClassLibrary.GridNamespace
         #endregion
 
         #region Конструкторы
-        public GridWithGeometryPreCalculated(Grid grid, Geometry geometry)
+        public GridWithGeometryPreCalculated(Grid3D grid, Geometry geometry)
         {
             GenerateLayersFromGridAndGeometry(grid, geometry);
             CalculateGridLayers3DParamaters();
@@ -53,7 +53,7 @@ namespace ElasticityClassLibrary.GridNamespace
         /// </summary>
         /// <param name="grid">Объект Grid</param>
         /// <param name="geometry">Объект Geometry</param>
-        private void GenerateLayersFromGridAndGeometry(Grid grid, Geometry geometry)
+        private void GenerateLayersFromGridAndGeometry(Grid3D grid, Geometry geometry)
         {
             InsertGridLayersFromGrid(grid);
             InsertGridLayersFromGeometry(geometry);
@@ -63,7 +63,7 @@ namespace ElasticityClassLibrary.GridNamespace
         /// Генерирует списки слоёв из объекта Grid
         /// </summary>
         /// <param name="grid">Объект сетки Grid</param>
-        private void InsertGridLayersFromGrid(Grid grid)
+        private void InsertGridLayersFromGrid(Grid3D grid)
         {
             GridLayers3D.GridLayersX = GenerateGridLayerListFromStepTransitionList(grid.StepTransitionsX);
             GridLayers3D.GridLayersY = GenerateGridLayerListFromStepTransitionList(grid.StepTransitionsY);

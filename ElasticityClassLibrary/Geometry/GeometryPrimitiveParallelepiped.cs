@@ -9,7 +9,7 @@ namespace ElasticityClassLibrary.GeometryNamespase
     /// Параллелепипед
     /// </summary>
     [Serializable]
-    public class GeometryPrimitiveParallelepiped : GeometryPrimitive
+    public class GeometryPrimitiveParallelepiped : GeometryPrimitive3D
     {
         #region Конструкторы
         /// <summary>
@@ -56,7 +56,7 @@ namespace ElasticityClassLibrary.GeometryNamespase
         /// Координата расположения примитива внутри геометрии,
         /// т.е. относительно координаты расположения элемента
         /// </summary>
-        public override Coordinate3D CoordinateInElement { get; set; }
+        public override Coordinate3D CoordinateInElement3D { get; set; }
 
         /// <summary>
         /// Список нагрузок, действующих на примитив
@@ -107,9 +107,9 @@ namespace ElasticityClassLibrary.GeometryNamespase
             uint numLayersY,
             uint numLayersZ)
         {
-            SetGridLayerList(GridLayers3D.GridLayersX, numLayersX, CoordinateInElement.X,LengthX);
-            SetGridLayerList(GridLayers3D.GridLayersY, numLayersY, CoordinateInElement.Y, LengthX);
-            SetGridLayerList(GridLayers3D.GridLayersZ, numLayersZ, CoordinateInElement.Z, LengthX);
+            SetGridLayerList(GridLayers3D.GridLayersX, numLayersX, CoordinateInElement3D.X, LengthX);
+            SetGridLayerList(GridLayers3D.GridLayersY, numLayersY, CoordinateInElement3D.Y, LengthX);
+            SetGridLayerList(GridLayers3D.GridLayersZ, numLayersZ, CoordinateInElement3D.Z, LengthX);
         }
 
         /// <summary>

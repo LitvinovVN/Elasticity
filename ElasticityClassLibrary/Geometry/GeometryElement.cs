@@ -39,7 +39,7 @@ namespace ElasticityClassLibrary.GeometryNamespase
 
                 foreach (var item in GeometryPrimitives)
                 {
-                    var gridLayers3DFromGeometryPrimitive = item.GetGridLayers3D;
+                    var gridLayers3DFromGeometryPrimitive = (GridLayers3D)item.GetGridLayers;
 
                     gridLayers3DFromGeometryPrimitive.GridLayersX.ForEach(l => l.Coordinate += CoordinateLocation.X);
                     gridLayers3DFromGeometryPrimitive.GridLayersY.ForEach(l => l.Coordinate += CoordinateLocation.Y);

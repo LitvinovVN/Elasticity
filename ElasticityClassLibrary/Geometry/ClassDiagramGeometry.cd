@@ -1,38 +1,70 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="ElasticityClassLibrary.GeometryNamespase.Geometry">
-    <Position X="2.75" Y="1.5" Width="2.25" />
+    <Position X="0.5" Y="1.75" Width="2.25" />
     <TypeIdentifier>
       <HashCode>ACAAAAAAAABEAAAAAAAAAAAAAAAAQAAAAAAAAAAAEAA=</HashCode>
       <FileName>Geometry\Geometry.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ElasticityClassLibrary.GeometryNamespase.GeometryElement">
-    <Position X="5.75" Y="2.25" Width="2.25" />
+    <Position X="3" Y="2.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>ACBAAAAAAAAAAAAEAAAAEAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Geometry\GeometryElement.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ElasticityClassLibrary.GeometryNamespase.GeometryPrimitive" Collapsed="true">
-    <Position X="9" Y="3.25" Width="1.5" />
+  <Class Name="ElasticityClassLibrary.GeometryNamespase.GeometryPrimitive1D">
+    <Position X="2" Y="6.75" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>ACAAAAAAQAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
-      <FileName>Geometry\GeometryPrimitive.cs</FileName>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAQgAEAAAAAAAAA=</HashCode>
+      <FileName>Geometry\GeometryPrimitive1D.cs</FileName>
+      <NewMemberFileName>Geometry\GeometryPrimitive.cs</NewMemberFileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ElasticityClassLibrary.GeometryNamespase.GeometryPrimitiveCube">
-    <Position X="8.5" Y="4.5" Width="2.25" />
+    <Position X="10" Y="12.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>ACAAAAAAQAAAAAAAAAAAAABAAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <HashCode>ACAAAAAAQAAAAAAAAIAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Geometry\GeometryPrimitiveCube.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ElasticityClassLibrary.GeometryNamespase.GeometryPrimitiveParallelepiped">
-    <Position X="11.25" Y="4.5" Width="2.75" />
+  <Class Name="ElasticityClassLibrary.GeometryNamespase.GeometryPrimitive">
+    <Position X="6.25" Y="3.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>ACAEAAAAQAAAAAAAAABAAGABAAAAAAQAAAAAAAAAAAI=</HashCode>
+      <HashCode>AAAAAAAAQAIAAAAAAAAAAAAAAAAAAAQAAEAAAAAAAAA=</HashCode>
+      <FileName>Geometry\GeometryPrimitive.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.GeometryNamespase.GeometryPrimitive1DLineSegment">
+    <Position X="1.75" Y="9.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAQAIAAAAAAABAAABAAAAAAAAgAACCAAAAAAA=</HashCode>
+      <FileName>Geometry\GeometryPrimitive1DLineSegment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.GeometryNamespase.GeometryPrimitiveParallelepiped">
+    <Position X="9.75" Y="9.75" Width="2.75" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>ACAEAAAAQAAAAAAAAIBAAGABAAAAAAAAAAAAAAAAAAI=</HashCode>
       <FileName>Geometry\GeometryPrimitiveParallelepiped.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.GeometryNamespase.GeometryPrimitive2D">
+    <Position X="6.25" Y="6.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>Geometry\GeometryPrimitive2D.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.GeometryNamespase.GeometryPrimitive3D">
+    <Position X="10" Y="6.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAIAAAAAAIAAAAAAAAAAAAQAAEAAAAAAAAA=</HashCode>
+      <FileName>Geometry\GeometryPrimitive3D.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

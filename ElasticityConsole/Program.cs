@@ -125,7 +125,7 @@ namespace ElasticityConsole
         /// </summary>
         private static void GenerateGridTests()
         {
-            Grid grid = new Grid(10m, 1m, 0.5m, 10, 5, 5);            
+            Grid3D grid = new Grid3D(10m, 1m, 0.5m, 10, 5, 5);            
             Console.WriteLine($"Проверка корректности сетки: {grid.GridValidity()}");
 
             var result = grid.InsertLayerX(10m);
@@ -145,7 +145,7 @@ namespace ElasticityConsole
             Console.WriteLine($"Проверка корректности сетки после вставки слоёв: {grid.GridValidity()}");
 
             /////////////////////////
-            XmlSerializer formatter = new XmlSerializer(typeof(Grid));
+            XmlSerializer formatter = new XmlSerializer(typeof(Grid3D));
             using (FileStream fs = new FileStream("grid1D.xml", FileMode.Create))
             {
                 formatter.Serialize(fs, grid);
@@ -160,7 +160,7 @@ namespace ElasticityConsole
         /// </summary>
         static void GridInsertionsRandom()
         {
-            Grid grid = new Grid(10m, 1m, 0.5m, 100, 100, 100);
+            Grid3D grid = new Grid3D(10m, 1m, 0.5m, 100, 100, 100);
             Console.WriteLine($"Сгенерирована сетка 10*1*0.5 с числом узлов 100, 100, 100");
             Console.WriteLine($"Проверка корректности сетки: {grid.GridValidity()}");
                         
@@ -185,7 +185,7 @@ namespace ElasticityConsole
             Console.WriteLine($"Проверка корректности сетки после корректировки индексов: {grid.GridValidity()}");
 
             /////////////////////////
-            XmlSerializer formatter = new XmlSerializer(typeof(Grid));
+            XmlSerializer formatter = new XmlSerializer(typeof(Grid3D));
             using (FileStream fs = new FileStream("GridInsertionsRandom.xml", FileMode.Create))
             {
                 formatter.Serialize(fs, grid);
@@ -230,7 +230,7 @@ namespace ElasticityConsole
         /// </summary>
         private static void GridWithGeometryPreCalculatedTests()
         {
-            Grid grid = new Grid(10m, 10m, 10m, 5, 10, 20);
+            Grid3D grid = new Grid3D(10m, 10m, 10m, 5, 10, 20);
 
             Geometry geometry = new Geometry();
             GeometryElement geometryElement = new GeometryElement(new Coordinate3D(1m, 2m, 3m));
@@ -256,122 +256,19 @@ namespace ElasticityConsole
             op.Ki   =   2m;
             op.Kip1 =   1m / (2m * 0.5m);
 
-            #region Создаём узлы одномерной сетки с известными значениями на границах
-            var task1DNodes = new List<Node>();
-            Node node0 = new Node
-            {
-                NodeLocationEnum = NodeLocationEnum.Outer,
-                Index = 0,
-                Coordinate = new Coordinate1D(0m),
-                NodeValue = null,
-                DerivativeOperator = null                
-            };
-            task1DNodes.Add(node0);
+            // Создаём одномерную расчетную область
+            var raschOblast1D = new Grid1D(1.5m, 11, AxisEnum.X);
+            // Создаём исследуемый объект
+            var lineSegment = new GeometryPrimitive1DLineSegment(new Coordinate1D(0m),1.5m);
 
-            Node node1 = new Node
-            {
-                NodeLocationEnum = NodeLocationEnum.Outer,
-                Index = 1,
-                Coordinate = new Coordinate1D(0.5m),
-                NodeValue = null,
-                DerivativeOperator = null
-            };
-            task1DNodes.Add(node1);
-                        
-            Node node2 = new Node
-            {
-                NodeLocationEnum = NodeLocationEnum.OnTheSurface,
-                Index = 2,
-                Coordinate = new Coordinate1D(1m),
-                NodeValue = new NodeValueConst { Value = 10 },
-                DerivativeOperator = null
-            };
-            task1DNodes.Add(node2);
-
-            Node node3 = new Node
-            {
-                NodeLocationEnum = NodeLocationEnum.Internal,
-                Index = 3,
-                Coordinate = new Coordinate1D(1.5m),
-                NodeValue = new NodeValueRequired(),
-                DerivativeOperator = op
-            };
-            task1DNodes.Add(node3);
-
-            Node node4 = new Node
-            {
-                NodeLocationEnum = NodeLocationEnum.Internal,
-                Index = 4,
-                Coordinate = new Coordinate1D(2.0m),
-                NodeValue = new NodeValueRequired(),
-                DerivativeOperator = op
-            };
-            task1DNodes.Add(node4);
-
-            Node node5 = new Node
-            {
-                NodeLocationEnum = NodeLocationEnum.Internal,
-                Index = 5,
-                Coordinate = new Coordinate1D(2.5m),
-                NodeValue = new NodeValueRequired(),
-                DerivativeOperator = op
-            };
-            task1DNodes.Add(node5);
-
-            Node node6 = new Node
-            {
-                NodeLocationEnum = NodeLocationEnum.Internal,
-                Index = 6,
-                Coordinate = new Coordinate1D(3.0m),
-                NodeValue = new NodeValueRequired(),
-                DerivativeOperator = op
-            };
-            task1DNodes.Add(node6);
-
-            Node node7 = new Node
-            {
-                NodeLocationEnum = NodeLocationEnum.Internal,
-                Index = 7,
-                Coordinate = new Coordinate1D(3.5m),
-                NodeValue = new NodeValueRequired(),
-                DerivativeOperator = op
-            };
-            task1DNodes.Add(node7);
-
-            Node node8 = new Node
-            {
-                NodeLocationEnum = NodeLocationEnum.OnTheSurface,
-                Index = 8,
-                Coordinate = new Coordinate1D(4.0m),
-                NodeValue = new NodeValueConst { Value = 5 },
-                DerivativeOperator = null
-            };
-            task1DNodes.Add(node8);
-
-            Node node9 = new Node
-            {
-                NodeLocationEnum = NodeLocationEnum.Outer,
-                Index = 9,
-                Coordinate = new Coordinate1D(4.5m),
-                NodeValue = null,
-                DerivativeOperator = null
-            };
-            task1DNodes.Add(node9);
-
-            Node node10 = new Node
-            {
-                NodeLocationEnum = NodeLocationEnum.Outer,
-                Index = 10,
-                Coordinate = new Coordinate1D(5.0m),
-                NodeValue = null,
-                DerivativeOperator = null
-            };
-            task1DNodes.Add(node10);
-            #endregion
+            var raschObjecrGeometry = new Geometry();
+            var geometryElement = new GeometryElement();
+            geometryElement.GeometryPrimitives.Add(lineSegment);
+            raschObjecrGeometry.GeometryElements.Add(geometryElement);
 
             // Создаём задачу
             var task = new SolverTask1D();
-            task.NodeList = task1DNodes;
+            //task.NodeList = task1DNodes;
 
             SolverResult result = Solver.Calculate(task);
         }
