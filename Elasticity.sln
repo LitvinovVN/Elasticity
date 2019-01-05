@@ -7,7 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElasticityClassLibrary", "E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElasticityConsole", "ElasticityConsole\ElasticityConsole.csproj", "{FB44113A-00DC-486B-9F2D-E7DD2D350FA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElasticityClassLibraryXUnitTests", "ElasticityClassLibraryXUnitTests\ElasticityClassLibraryXUnitTests.csproj", "{33327EAF-4BB9-4A20-9EFC-FD64E775996A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElasticityClassLibraryXUnitTests", "ElasticityClassLibraryXUnitTests\ElasticityClassLibraryXUnitTests.csproj", "{33327EAF-4BB9-4A20-9EFC-FD64E775996A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SparseMatrixRepSeq", "SparseMatrixRepSeq\SparseMatrixRepSeq.csproj", "{FB402281-5E9C-4B32-A03C-5445A592859A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SparseMatrixRepSeqConsoleApp", "SparseMatrixRepSeqConsoleApp\SparseMatrixRepSeqConsoleApp.csproj", "{3C0FAAB8-6C52-401D-A884-8742FDD54EEC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +31,14 @@ Global
 		{33327EAF-4BB9-4A20-9EFC-FD64E775996A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33327EAF-4BB9-4A20-9EFC-FD64E775996A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33327EAF-4BB9-4A20-9EFC-FD64E775996A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB402281-5E9C-4B32-A03C-5445A592859A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB402281-5E9C-4B32-A03C-5445A592859A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB402281-5E9C-4B32-A03C-5445A592859A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB402281-5E9C-4B32-A03C-5445A592859A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C0FAAB8-6C52-401D-A884-8742FDD54EEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C0FAAB8-6C52-401D-A884-8742FDD54EEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C0FAAB8-6C52-401D-A884-8742FDD54EEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C0FAAB8-6C52-401D-A884-8742FDD54EEC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
