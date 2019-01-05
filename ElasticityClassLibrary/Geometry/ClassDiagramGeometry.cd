@@ -1,70 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="ElasticityClassLibrary.GeometryNamespase.Geometry">
-    <Position X="0.5" Y="1.75" Width="2.25" />
+    <Position X="3.5" Y="0.75" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>ACAAAAAAAABEAAAAAAAAAAAAAAAAQAAAAAAAAAAAEAA=</HashCode>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAQAAAAAAAAAAAEAA=</HashCode>
       <FileName>Geometry\Geometry.cs</FileName>
+      <NewMemberFileName>Geometry\Geometry3D.cs</NewMemberFileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ElasticityClassLibrary.GeometryNamespase.GeometryElement">
-    <Position X="3" Y="2.5" Width="2.25" />
+  <Class Name="ElasticityClassLibrary.GeometryNamespase.Geometry3D">
+    <Position X="6.25" Y="3.75" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>ACBAAAAAAAAAAAAEAAAAEAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Geometry\GeometryElement.cs</FileName>
+      <HashCode>ACAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Geometry\Geometry3D.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ElasticityClassLibrary.GeometryNamespase.GeometryPrimitive1D">
-    <Position X="2" Y="6.75" Width="2.25" />
+  <Class Name="ElasticityClassLibrary.GeometryNamespase.Geometry2D">
+    <Position X="3.25" Y="3.75" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAQgAEAAAAAAAAA=</HashCode>
-      <FileName>Geometry\GeometryPrimitive1D.cs</FileName>
-      <NewMemberFileName>Geometry\GeometryPrimitive.cs</NewMemberFileName>
+      <HashCode>AAAAAAAAAAAEAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>Geometry\Geometry2D.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ElasticityClassLibrary.GeometryNamespase.GeometryPrimitiveCube">
-    <Position X="10" Y="12.5" Width="2.25" />
+  <Class Name="ElasticityClassLibrary.GeometryNamespase.Geometry1D">
+    <Position X="0.5" Y="3.75" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>ACAAAAAAQAAAAAAAAIAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Geometry\GeometryPrimitiveCube.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="ElasticityClassLibrary.GeometryNamespase.GeometryPrimitive">
-    <Position X="6.25" Y="3.5" Width="2.25" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAQAIAAAAAAAAAAAAAAAAAAAQAAEAAAAAAAAA=</HashCode>
-      <FileName>Geometry\GeometryPrimitive.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="ElasticityClassLibrary.GeometryNamespase.GeometryPrimitive1DLineSegment">
-    <Position X="1.75" Y="9.75" Width="2.5" />
-    <TypeIdentifier>
-      <HashCode>AAAEAAAAQAIAAAAAAABAAABAAAAAAAAgAACCAAAAAAA=</HashCode>
-      <FileName>Geometry\GeometryPrimitive1DLineSegment.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="ElasticityClassLibrary.GeometryNamespase.GeometryPrimitiveParallelepiped">
-    <Position X="9.75" Y="9.75" Width="2.75" />
-    <Compartments>
-      <Compartment Name="Properties" Collapsed="true" />
-    </Compartments>
-    <TypeIdentifier>
-      <HashCode>ACAEAAAAQAAAAAAAAIBAAGABAAAAAAAAAAAAAAAAAAI=</HashCode>
-      <FileName>Geometry\GeometryPrimitiveParallelepiped.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="ElasticityClassLibrary.GeometryNamespase.GeometryPrimitive2D">
-    <Position X="6.25" Y="6.75" Width="2.25" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAA=</HashCode>
-      <FileName>Geometry\GeometryPrimitive2D.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="ElasticityClassLibrary.GeometryNamespase.GeometryPrimitive3D">
-    <Position X="10" Y="6.75" Width="2" />
-    <TypeIdentifier>
-      <HashCode>ACAAAAAAAAIAAAAAAIAAAAAAAAAAAAQAAEAAAAAAAAA=</HashCode>
-      <FileName>Geometry\GeometryPrimitive3D.cs</FileName>
+      <HashCode>AAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>Geometry\Geometry1D.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

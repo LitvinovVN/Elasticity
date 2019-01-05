@@ -180,9 +180,9 @@ namespace ElasticityClassLibrary.GridNamespace
         {
             if (Alfa1B!=null && Alfa1F!=null && H!=null)
             {
-                Derivative1 = Derivative.GetDerivative1Operator((decimal)Alfa1B,
+                Derivative1 = Derivative.GetDerivativeOperator1D3P_Derivative1((decimal)Alfa1B,
                     (decimal)Alfa1F, (decimal)H);
-                Derivative2 = Derivative.GetDerivative2Operator((decimal)Alfa1B,
+                Derivative2 = Derivative.GetDerivativeOperator1D3P_Derivative2((decimal)Alfa1B,
                     (decimal)Alfa1F, (decimal)H);
             }
         }

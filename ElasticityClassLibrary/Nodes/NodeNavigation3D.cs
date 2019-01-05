@@ -1,4 +1,4 @@
-﻿namespace ElasticityClassLibrary.SolverNamespase
+﻿namespace ElasticityClassLibrary.Nodes
 {
     /// <summary>
     /// Класс одномерной навигации по узлам

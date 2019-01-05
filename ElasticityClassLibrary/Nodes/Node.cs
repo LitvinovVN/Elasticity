@@ -2,12 +2,12 @@
 using ElasticityClassLibrary.GeometryNamespase;
 using ElasticityClassLibrary.Infrastructure;
 
-namespace ElasticityClassLibrary.SolverNamespase
+namespace ElasticityClassLibrary.Nodes
 {
     /// <summary>
     /// Узел сетки
     /// </summary>
-    public class Node
+    public abstract class Node
     {
         /// <summary>
         /// Расположение узла (за контуром / граничный / внутренний)
@@ -22,7 +22,7 @@ namespace ElasticityClassLibrary.SolverNamespase
         /// <summary>
         /// Координата узла
         /// </summary>
-        public Coordinate Coordinate { get; set; }
+        public abstract Coordinate Coordinate { get; set; }
 
         /// <summary>
         /// Значение функции в узле
@@ -39,6 +39,6 @@ namespace ElasticityClassLibrary.SolverNamespase
         /// <summary>
         /// Навигационный объект
         /// </summary>
-        public NodeNavigation NodeNavigation { get; set; }
+        public abstract NodeNavigation NodeNavigation { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ElasticityClassLibrary.SolverNamespase
+namespace ElasticityClassLibrary.SolverNamespace
 {
     /// <summary>
     /// Двумерная задача

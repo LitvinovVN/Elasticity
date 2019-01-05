@@ -5,8 +5,9 @@ using System.Text;
 using ElasticityClassLibrary.Derivatives;
 using ElasticityClassLibrary.GridNamespace;
 using ElasticityClassLibrary.Infrastructure;
+using ElasticityClassLibrary.Nodes;
 
-namespace ElasticityClassLibrary.SolverNamespase
+namespace ElasticityClassLibrary.SolverNamespace
 {
     /// <summary>
     /// Решатель МКР
@@ -59,7 +60,7 @@ namespace ElasticityClassLibrary.SolverNamespase
         {
             SolverResult solverResult = new SolverResult();
 
-            foreach (var node in task.NodeList)
+            foreach (var node in task.NodeSet1D.Nodes)
             {
                 var currentNodeValue = node.NodeValue;
                 // Игнорируем узлы с ненастроенным свойством NodeValue

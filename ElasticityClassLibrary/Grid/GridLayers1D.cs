@@ -19,12 +19,13 @@ namespace ElasticityClassLibrary.GridNamespace
         /// Набор слоёв по оси
         /// </summary>
         public List<GridLayer> GridLayers { get; set; } = new List<GridLayer>();
-                
 
+        #region Конструкторы
         public GridLayers1D()
         {
 
         }
+        #endregion
 
         /// <summary>
         /// Добавляет слои из переданного объекта в текущий

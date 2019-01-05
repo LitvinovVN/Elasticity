@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using ElasticityClassLibrary.GridNamespace;
+using ElasticityClassLibrary.Infrastructure;
 using ElasticityClassLibrary.NagruzkaNamespace;
+using ElasticityClassLibrary.Nodes;
 
 namespace ElasticityClassLibrary.GeometryNamespase
 {
@@ -25,7 +27,7 @@ namespace ElasticityClassLibrary.GeometryNamespase
             decimal length,            
             bool isCavity = false,
             uint numLayers=11)
-        {
+        {            
             IsCavity = isCavity;
             CoordinateInElement = coordinateInElement;
             Length = length;            
@@ -57,7 +59,7 @@ namespace ElasticityClassLibrary.GeometryNamespase
 
         #region Геометрические размеры примитива
         /// <summary>
-        /// Длина параллелепипеда
+        /// Длина отрезка
         /// </summary>
         public decimal Length { get; set; }                
         #endregion
@@ -77,6 +79,7 @@ namespace ElasticityClassLibrary.GeometryNamespase
                 return GridLayers1D;
             }
         }
+                
 
         /// <summary>
         /// Заполняет список слоёв объекта
@@ -108,6 +111,64 @@ namespace ElasticityClassLibrary.GeometryNamespase
                 gridLayer.Coordinate = coordinate + index * step;
                 gridLayerList.Add(gridLayer);
             }
+        }
+
+        /// <summary>
+        /// Возвращает набор узлов сетки, входящих в примитив
+        /// </summary>
+        /// <param name="grid"></param>
+        /// <returns></returns>
+        public override NodeSet GetNodeSet(GridLayers gridLayers)
+        {
+            var nodeSet1D = new NodeSet1D();
+
+            var gridLayers1D = (GridLayers1D)gridLayers;
+            for (int i = 0; i < gridLayers1D.GridLayers.Count; i++)
+            {
+                var curGridLayer = gridLayers1D.GridLayers[i];
+                decimal curCoordDecimal = curGridLayer.Coordinate;
+                Coordinate curCoord = new Coordinate1D(curCoordDecimal);
+
+                var nodeLocationEnum = IsCoordinateBelongsToGeometryPrimitive(curCoord);
+                if (nodeLocationEnum != NodeLocationEnum.Outer)
+                {
+                    var addingNode = new Node1D();
+                    addingNode.Coordinate = new Coordinate1D(curGridLayer.Coordinate);
+                    addingNode.NodeLocationEnum = nodeLocationEnum;
+                    //addingNode.
+                    nodeSet1D.AddNode1D(addingNode);
+                }
+            }
+
+            return nodeSet1D;
+        }
+
+        /// <summary>
+        /// Определяет, принадлежит ли координата примитиву
+        /// и возвращает соответствующий объект перечисления NodeLocationEnum
+        /// </summary>
+        /// <param name="curCoord"></param>
+        /// <returns></returns>
+        public override NodeLocationEnum IsCoordinateBelongsToGeometryPrimitive(Coordinate1D curCoord)
+        {
+            var geometryElement1D_CoordinateLocation1D = GeometryElement1D.CoordinateLocation1D;
+
+            // Координата левой границы отрезка
+            decimal leftBound = geometryElement1D_CoordinateLocation1D.X + CoordinateInElement1D.X;
+            // Координата правой границы отрезка
+            decimal rightBound = leftBound + Length;
+
+            if (curCoord.X == leftBound || curCoord.X == rightBound)
+            {
+                return NodeLocationEnum.OnTheSurface;
+            }
+
+            if (curCoord.X >= leftBound && curCoord.X <= rightBound)
+            {
+                return NodeLocationEnum.Internal;
+            }
+
+            return NodeLocationEnum.Outer;
         }
     }
 }

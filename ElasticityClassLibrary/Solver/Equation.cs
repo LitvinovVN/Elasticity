@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ElasticityClassLibrary.SolverNamespase
+namespace ElasticityClassLibrary.SolverNamespace
 {
     /// <summary>
     /// Линейное алгебраическое уравнение

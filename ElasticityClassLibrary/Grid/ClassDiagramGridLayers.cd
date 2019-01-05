@@ -8,21 +8,21 @@
     </TypeIdentifier>
   </Class>
   <Class Name="ElasticityClassLibrary.GridNamespace.GridLayers2D">
-    <Position X="5" Y="2.5" Width="1.75" />
+    <Position X="4.75" Y="2.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAgAAAAAAAIAAABAAAAAAAAAAAAAAQAAAAAAAAAAAAA=</HashCode>
+      <HashCode>ABgAAAAAAAAAAAABAAAAAAAAAAAAAQAAAACAAAAAAAA=</HashCode>
       <FileName>Grid\GridLayers2D.cs</FileName>
       <NewMemberFileName>Grid\GridLayers1D.cs</NewMemberFileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ElasticityClassLibrary.GridNamespace.GridLayers3D">
-    <Position X="7.5" Y="2.5" Width="1.75" />
+    <Position X="7.5" Y="2.5" Width="2.5" />
     <InheritanceLine Type="ElasticityClassLibrary.GridNamespace.GridLayers" FixedToPoint="true">
       <Path>
         <Point X="6" Y="1.796" />
         <Point X="6" Y="2.125" />
-        <Point X="8.375" Y="2.125" />
-        <Point X="8.375" Y="2.5" />
+        <Point X="8.75" Y="2.125" />
+        <Point X="8.75" Y="2.5" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -31,10 +31,24 @@
     </TypeIdentifier>
   </Class>
   <Class Name="ElasticityClassLibrary.GridNamespace.GridLayers1D">
-    <Position X="2.25" Y="2.5" Width="2.25" />
+    <Position X="1.75" Y="2.5" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAgAAAAAAAIAAABAAAAAAAAAAAAAAQAAAAAAAAAAAAA=</HashCode>
       <FileName>Grid\GridLayers1D.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.GridNamespace.GridLayer">
+    <Position X="10.25" Y="3.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQBAAAAAAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Grid\GridLayer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.GridNamespace.GridLayerParameters">
+    <Position X="12.5" Y="4.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAACQAAABgABAAAAQAAACEAAgAABkAAAAI=</HashCode>
+      <FileName>Grid\GridLayerParameters.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

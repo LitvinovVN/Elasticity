@@ -1,4 +1,4 @@
-﻿namespace ElasticityClassLibrary.SolverNamespase
+﻿namespace ElasticityClassLibrary.SolverNamespace
 {
     /// <summary>
     /// Значение в узле (абстрактный класс)

@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ElasticityClassLibrary.GridNamespace.GridWithGeometryPreCalculated">
+    <Position X="4" Y="0.5" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAEAA=</HashCode>
+      <FileName>Grid\GridWithGeometryPreCalculated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.GridNamespace.GridWithGeometryPreCalculated1D">
+    <Position X="0.75" Y="2.5" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAEAAAAAAAAAACAAACAAAACAAAAAAAA=</HashCode>
+      <FileName>Grid\GridWithGeometryPreCalculated1D.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.GridNamespace.GridWithGeometryPreCalculated2D">
+    <Position X="4.75" Y="2.5" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAEBAAAAAAAAACAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>Grid\GridWithGeometryPreCalculated2D.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.GridNamespace.GridWithGeometryPreCalculated3D">
+    <Position X="8.75" Y="2.5" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAAAEAAAAAAAAAACAAgCAAAAAAAAAAAAA=</HashCode>
+      <FileName>Grid\GridWithGeometryPreCalculated3D.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

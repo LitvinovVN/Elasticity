@@ -6,8 +6,8 @@ namespace ElasticityClassLibrary.GeometryNamespase
     /// <summary>
     /// Простейший элемент геометрии
     /// </summary>    
-    [XmlInclude(typeof(GeometryPrimitiveParallelepiped))]
-    [XmlInclude(typeof(GeometryPrimitiveCube))]
+    [XmlInclude(typeof(GeometryPrimitive3DParallelepiped))]
+    [XmlInclude(typeof(GeometryPrimitive3DCube))]
     public abstract class GeometryPrimitive3D : GeometryPrimitive
     {
         /// <summary>

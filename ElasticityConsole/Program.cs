@@ -4,7 +4,7 @@ using ElasticityClassLibrary.GeometryNamespase;
 using ElasticityClassLibrary.GridNamespace;
 using ElasticityClassLibrary.Infrastructure;
 using ElasticityClassLibrary.NagruzkaNamespace;
-using ElasticityClassLibrary.SolverNamespase;
+using ElasticityClassLibrary.SolverNamespace;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -202,7 +202,7 @@ namespace ElasticityConsole
         {
             // Примитив - параллелепипед
             Coordinate3D coordinate3D = new Coordinate3D(1m, 1m, 1m);
-            GeometryPrimitiveParallelepiped parallelepiped = new GeometryPrimitiveParallelepiped(coordinate3D, 5m, 1m, 0.5m);
+            GeometryPrimitive3DParallelepiped parallelepiped = new GeometryPrimitive3DParallelepiped(coordinate3D, 5m, 1m, 0.5m);
 
             NagruzkaRaspredRavnomern nagr1 = new NagruzkaRaspredRavnomern();
             nagr1.Q = new Q(200000, 100000, 50000);
@@ -212,17 +212,17 @@ namespace ElasticityConsole
             nagr1.Area = areaRectangle1;
             parallelepiped.NagruzkaList.Add(nagr1);
 
-            GeometryElement geometryElement = new GeometryElement(new Coordinate3D(0.5m, 1m, 1.5m));
+            GeometryElement geometryElement = new GeometryElement3D(new Coordinate3D(0.5m, 1m, 1.5m));
             geometryElement.GeometryPrimitives.Add(parallelepiped);
-            geometryElement.GeometryPrimitives.Add(new GeometryPrimitiveCube(new Coordinate3D(1.1m,1.2m,1.1m),0.15m,true));
+            geometryElement.GeometryPrimitives.Add(new GeometryPrimitive3DCube(new Coordinate3D(1.1m,1.2m,1.1m),0.15m,true));
 
-            Geometry geometry = new Geometry();
+            Geometry3D geometry = new Geometry3D();
             geometry.GeometryElements.Add(geometryElement);
 
             /////////////////////////            
             Console.WriteLine("Сериализация объекта: {0}", geometry.ExportToXML("", "GeometryParallelepiped.xml"));
-            Geometry g2 = Geometry.ImportFromXML("", "GeometryParallelepiped.xml");
-            Console.WriteLine("Проверка на равенство серализованного и десериализованного объектов: {0}", Geometry.IsGeometryValuesEquals(geometry, g2));            
+            Geometry3D g2 = (Geometry3D)Geometry.ImportFromXML("", "GeometryParallelepiped.xml");
+            Console.WriteLine("Проверка на равенство серализованного и десериализованного объектов: {0}", Geometry3D.IsGeometryValuesEquals(geometry, g2));            
         }
 
         /// <summary>
@@ -232,16 +232,16 @@ namespace ElasticityConsole
         {
             Grid3D grid = new Grid3D(10m, 10m, 10m, 5, 10, 20);
 
-            Geometry geometry = new Geometry();
-            GeometryElement geometryElement = new GeometryElement(new Coordinate3D(1m, 2m, 3m));
-            geometryElement.GeometryPrimitives.Add(new GeometryPrimitiveParallelepiped(new Coordinate3D(0.1m, 0.2m, 0.3m), 3m, 1m, 2m));
+            Geometry3D geometry = new Geometry3D();
+            GeometryElement geometryElement = new GeometryElement3D(new Coordinate3D(1m, 2m, 3m));
+            geometryElement.GeometryPrimitives.Add(new GeometryPrimitive3DParallelepiped(new Coordinate3D(0.1m, 0.2m, 0.3m), 3m, 1m, 2m));
             geometry.GeometryElements.Add(geometryElement);
 
-            var gridWithGeometryPreCalculated = new GridWithGeometryPreCalculated(grid, geometry);
+            var gridWithGeometryPreCalculated = new GridWithGeometryPreCalculated3D(grid, geometry);
 
             /////////////////////////            
             Console.WriteLine("Сериализация объекта GridWithGeometryPreCalculated: {0}", gridWithGeometryPreCalculated.ExportToXML("", "GridWithGeometryPreCalculated.xml"));
-            GridWithGeometryPreCalculated g2 = GridWithGeometryPreCalculated.ImportFromXML("", "GridWithGeometryPreCalculated.xml");
+            GridWithGeometryPreCalculated3D g2 = (GridWithGeometryPreCalculated3D)GridWithGeometryPreCalculated.ImportFromXML("", "GridWithGeometryPreCalculated.xml");
             //Console.WriteLine("Проверка на равенство серализованного и десериализованного объектов: {0}", GridWithGeometryPreCalculated.IsGridWithGeometryPreCalculatedValuesEquals(gridWithGeometryPreCalculated, g2));           
         }
 
@@ -259,16 +259,20 @@ namespace ElasticityConsole
             // Создаём одномерную расчетную область
             var raschOblast1D = new Grid1D(1.5m, 11, AxisEnum.X);
             // Создаём исследуемый объект
-            var lineSegment = new GeometryPrimitive1DLineSegment(new Coordinate1D(0m),1.5m);
+            var lineSegment = new GeometryPrimitive1DLineSegment(new Coordinate1D(0m),0.5m);
 
-            var raschObjecrGeometry = new Geometry();
-            var geometryElement = new GeometryElement();
-            geometryElement.GeometryPrimitives.Add(lineSegment);
-            raschObjecrGeometry.GeometryElements.Add(geometryElement);
+            var raschObjectGeometry1D = new Geometry1D();
+            var geometryElement = new GeometryElement1D(new Coordinate1D(0.5m));
+            geometryElement.AddGeometryPrimitive(lineSegment);
+            raschObjectGeometry1D.AddGeometryElement(geometryElement);
+
+            var gridWithGeometryPrecalculated1D = new GridWithGeometryPreCalculated1D(raschOblast1D, raschObjectGeometry1D);
+
+            var nodeSet1D = gridWithGeometryPrecalculated1D.NodeSet1D;
 
             // Создаём задачу
             var task = new SolverTask1D();
-            //task.NodeList = task1DNodes;
+            task.NodeSet1D = nodeSet1D;
 
             SolverResult result = Solver.Calculate(task);
         }

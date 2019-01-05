@@ -11,15 +11,25 @@ namespace ElasticityClassLibrary.GridNamespace
     public class GridLayers2D : GridLayers
     {
         /// <summary>
-        /// Ось координат (по умолчанию - Х)
+        /// Ось координат 1 (по умолчанию - Х)
         /// </summary>
-        public AxisEnum AxisEnum { get; set; } = AxisEnum.X;
+        public AxisEnum AxisEnum1 { get; set; } = AxisEnum.X;
 
         /// <summary>
-        /// Набор слоёв по оси
+        /// Ось координат 2 (по умолчанию - Y)
         /// </summary>
-        public List<GridLayer> GridLayers { get; set; } = new List<GridLayer>();
-                
+        public AxisEnum AxisEnum2 { get; set; } = AxisEnum.Y;
+
+        /// <summary>
+        /// Набор слоёв по оси 1
+        /// </summary>
+        public List<GridLayer> GridLayers1 { get; set; } = new List<GridLayer>();
+
+        /// <summary>
+        /// Набор слоёв по оси 2
+        /// </summary>
+        public List<GridLayer> GridLayers2 { get; set; } = new List<GridLayer>();
+
 
         public GridLayers2D()
         {
@@ -34,7 +44,8 @@ namespace ElasticityClassLibrary.GridNamespace
         {
             if (gridLayers2D == null) return;
 
-            GridLayers = MergeGridLayerLists(GridLayers, gridLayers2D.GridLayers);            
+            GridLayers1 = MergeGridLayerLists(GridLayers1, gridLayers2D.GridLayers1);
+            GridLayers2 = MergeGridLayerLists(GridLayers2, gridLayers2D.GridLayers2);
         }
 
         
@@ -42,9 +53,10 @@ namespace ElasticityClassLibrary.GridNamespace
         /// <summary>
         /// Вычисляет параметры сетки для всех наборов слоёв
         /// </summary>
-        public void CalculateGridLayers1DParameters()
+        public void CalculateGridLayers2DParameters()
         {
-            CalculateGridLayerParameters(GridLayers);            
+            CalculateGridLayerParameters(GridLayers1);
+            CalculateGridLayerParameters(GridLayers2);
         }        
     }
 }

@@ -17,7 +17,7 @@ namespace ElasticityClassLibrary.Derivatives
         /// к величине шага</param>
         /// <param name="h">Шаг</param>
         /// <returns></returns>
-        public static DerivativeOperator GetDerivative1Operator(decimal alfa1B,
+        public static DerivativeOperator GetDerivativeOperator1D3P_Derivative1(decimal alfa1B,
             decimal alfa1F,
             decimal h)
         {
@@ -36,7 +36,7 @@ namespace ElasticityClassLibrary.Derivatives
         /// к величине шага</param>
         /// <param name="h">Шаг</param>
         /// <returns></returns>
-        public static DerivativeOperator GetDerivative2Operator(decimal alfa1B,
+        public static DerivativeOperator GetDerivativeOperator1D3P_Derivative2(decimal alfa1B,
             decimal alfa1F,
             decimal h)
         {

@@ -1,5 +1,6 @@
 ﻿using System.Xml.Serialization;
 using ElasticityClassLibrary.GridNamespace;
+using ElasticityClassLibrary.Infrastructure;
 
 namespace ElasticityClassLibrary.GeometryNamespase
 {
@@ -9,6 +10,29 @@ namespace ElasticityClassLibrary.GeometryNamespase
     [XmlInclude(typeof(GeometryPrimitive1DLineSegment))]
     public abstract class GeometryPrimitive1D : GeometryPrimitive
     {
+        /// <summary>
+        /// Навигационное свойство для доступа
+        /// к элементу геометрии (на 1 уровень выше)
+        /// </summary>
+        public override GeometryElement GeometryElement
+        {
+            get
+            {
+                return GeometryElement1D;
+            }
+            set
+            {
+                GeometryElement1D = (GeometryElement1D)value;
+            }
+        }
+
+        /// <summary>
+        /// Навигационное свойство для доступа
+        /// к элементу геометрии ( на 1 уровень выше)
+        /// </summary>
+        [XmlIgnore]
+        public GeometryElement1D GeometryElement1D { get; set; }
+
         /// <summary>
         /// Количество измерений
         /// </summary>
@@ -48,6 +72,24 @@ namespace ElasticityClassLibrary.GeometryNamespase
         /// <summary>
         /// Возвращает объект со списками слоёв
         /// </summary>
-        public abstract GridLayers1D GetGridLayers1D { get; }        
+        public abstract GridLayers1D GetGridLayers1D { get; }
+
+        /// <summary>
+        /// Определяет принадлежность координаты примитиву
+        /// (переопределение абстрактного метода базового класса)
+        /// </summary>
+        /// <param name="coordinate"></param>
+        /// <returns></returns>
+        public override NodeLocationEnum IsCoordinateBelongsToGeometryPrimitive(Coordinate coordinate)
+        {
+            return IsCoordinateBelongsToGeometryPrimitive((Coordinate1D)coordinate);
+        }
+
+        /// <summary>
+        /// Определяет принадлежность координаты примитиву
+        /// </summary>
+        /// <param name="coordinate1D"></param>
+        /// <returns></returns>
+        public abstract NodeLocationEnum IsCoordinateBelongsToGeometryPrimitive(Coordinate1D coordinate1D);
     }
 }

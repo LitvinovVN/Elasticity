@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ElasticityClassLibrary.SolverNamespase
+namespace ElasticityClassLibrary.Nodes
 {
     /// <summary>
     /// Значение в узле - известная постоянная величина

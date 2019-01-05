@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using ElasticityClassLibrary.Nodes;
+using System.Collections.Generic;
 
-namespace ElasticityClassLibrary.SolverNamespase
+namespace ElasticityClassLibrary.SolverNamespace
 {
     /// <summary>
     /// Результаты расчетов

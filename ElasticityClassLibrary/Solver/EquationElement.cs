@@ -1,4 +1,6 @@
-﻿namespace ElasticityClassLibrary.SolverNamespase
+﻿using ElasticityClassLibrary.Nodes;
+
+namespace ElasticityClassLibrary.SolverNamespace
 {
     /// <summary>
     /// Отдельный компонент левой части уравнения

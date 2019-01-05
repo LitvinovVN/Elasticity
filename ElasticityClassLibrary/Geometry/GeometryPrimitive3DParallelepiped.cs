@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using ElasticityClassLibrary.GridNamespace;
+using ElasticityClassLibrary.Infrastructure;
 using ElasticityClassLibrary.NagruzkaNamespace;
+using ElasticityClassLibrary.Nodes;
 
 namespace ElasticityClassLibrary.GeometryNamespase
 {
@@ -9,7 +12,7 @@ namespace ElasticityClassLibrary.GeometryNamespase
     /// Параллелепипед
     /// </summary>
     [Serializable]
-    public class GeometryPrimitiveParallelepiped : GeometryPrimitive3D
+    public class GeometryPrimitive3DParallelepiped : GeometryPrimitive3D
     {
         #region Конструкторы
         /// <summary>
@@ -24,7 +27,7 @@ namespace ElasticityClassLibrary.GeometryNamespase
         /// <param name="numLayersX">Кол-во слоёв YZ по оси X</param>
         /// <param name="numLayersY">Кол-во слоёв XZ по оси Y</param>
         /// <param name="numLayersZ">Кол-во слоёв XY по оси Z</param>
-        public GeometryPrimitiveParallelepiped(Coordinate3D coordinateInElement,
+        public GeometryPrimitive3DParallelepiped(Coordinate3D coordinateInElement,
             decimal lengthX,
             decimal lengthY,
             decimal lengthZ,
@@ -41,7 +44,7 @@ namespace ElasticityClassLibrary.GeometryNamespase
             SetGridLayers3D(numLayersX, numLayersY, numLayersZ);
         }
         
-        public GeometryPrimitiveParallelepiped()
+        public GeometryPrimitive3DParallelepiped()
         {
                 
         }
@@ -97,6 +100,9 @@ namespace ElasticityClassLibrary.GeometryNamespase
             }
         }
 
+        [XmlIgnore]
+        public override GeometryElement GeometryElement { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
         /// <summary>
         /// Заполняет список слоёв объекта
         /// </summary>
@@ -133,6 +139,16 @@ namespace ElasticityClassLibrary.GeometryNamespase
                 gridLayer.Coordinate = coordinate + index * step;
                 gridLayerList.Add(gridLayer);
             }
+        }
+
+        public override NodeSet GetNodeSet(GridLayers gridLayers)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override NodeLocationEnum IsCoordinateBelongsToGeometryPrimitive(Coordinate coordinate)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,8 +1,9 @@
-﻿using System;
+﻿using ElasticityClassLibrary.Nodes;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ElasticityClassLibrary.SolverNamespase
+namespace ElasticityClassLibrary.SolverNamespace
 {
     /// <summary>
     /// Одномерная задача
@@ -10,8 +11,8 @@ namespace ElasticityClassLibrary.SolverNamespase
     public class SolverTask1D : SolverTask
     {
         /// <summary>
-        /// Список узлов сетки
+        /// Набор узлов сетки
         /// </summary>
-        public List<Node> NodeList { get; set; }
+        public NodeSet1D NodeSet1D { get; set; }
     }
 }

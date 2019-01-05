@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ElasticityClassLibrary.Nodes.Node">
+    <Position X="6" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAABAAAAAAAAAACQAAAAAAAAAECAAAAAAA=</HashCode>
+      <FileName>Nodes\Node.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.Nodes.Node1D">
+    <Position X="4.25" Y="3" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAABAAAAAAAAAAAAAAAAAAAAAAACAAAIAA=</HashCode>
+      <FileName>Nodes\Node1D.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.Nodes.NodeNavigation" Collapsed="true">
+    <Position X="1.25" Y="1.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Nodes\NodeNavigation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.Nodes.NodeNavigation1D" Collapsed="true">
+    <Position X="1.25" Y="2.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAQIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Nodes\NodeNavigation1D.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.Nodes.NodeNavigation2D" Collapsed="true">
+    <Position X="1.25" Y="3.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAIAAAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Nodes\NodeNavigation2D.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.Nodes.NodeNavigation3D" Collapsed="true">
+    <Position X="1.25" Y="5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAgCAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Nodes\NodeNavigation3D.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.Nodes.NodeValue">
+    <Position X="11" Y="3.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Nodes\NodeValue.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.Nodes.NodeValueConst">
+    <Position X="9.75" Y="5.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Nodes\NodeValueConst.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.Nodes.NodeValueRequired">
+    <Position X="12.5" Y="5.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Nodes\NodeValueRequired.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.Nodes.Node2D">
+    <Position X="6.5" Y="3" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAABAAAAAAAAAAAAQAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Nodes\Node2D.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.Nodes.Node3D">
+    <Position X="8.5" Y="3" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAABAAAAAAAAAAAAAAAAAAAAAAgCAAAAAA=</HashCode>
+      <FileName>Nodes\Node3D.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.Nodes.NodeSet">
+    <Position X="5.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Nodes\NodeSet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.Nodes.NodeSet2D" Collapsed="true">
+    <Position X="5.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Nodes\NodeSet2D.cs</FileName>
+      <NewMemberFileName>Nodes\NodeSet1D.cs</NewMemberFileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.Nodes.NodeSet1D" Collapsed="true">
+    <Position X="3.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Nodes\NodeSet1D.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElasticityClassLibrary.Nodes.NodeSet3D" Collapsed="true">
+    <Position X="7.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Nodes\NodeSet3D.cs</FileName>
+      <NewMemberFileName>Nodes\NodeSet1D.cs</NewMemberFileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

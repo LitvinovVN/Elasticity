@@ -1,25 +1,33 @@
 ﻿using ElasticityClassLibrary.GridNamespace;
-using System;
+using ElasticityClassLibrary.Nodes;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace ElasticityClassLibrary.GeometryNamespase
 {
     /// <summary>
-    /// Отдельный элемент геометрии моделируемого объекта
+    /// Элемент геометрии (абстрактный класс)
     /// </summary>
-    public class GeometryElement
+    [XmlInclude(typeof(GeometryElement1D))]
+    [XmlInclude(typeof(GeometryElement2D))]
+    [XmlInclude(typeof(GeometryElement3D))]
+    public abstract class GeometryElement
     {
         /// <summary>
         /// Координата расположения элемента
         /// относительно координат расчетной области
         /// </summary>
-        public Coordinate3D CoordinateLocation { get; set; }
+        public abstract Coordinate CoordinateLocation { get; set; }
 
         /// <summary>
         /// Набор примитивов, входящих в элемент геометрии
         /// </summary>
-        public List<GeometryPrimitive> GeometryPrimitives { get; set; }
-            = new List<GeometryPrimitive>();
+        public List<GeometryPrimitive> GeometryPrimitives { get; set; } = new List<GeometryPrimitive>();
+        
+        /// <summary>
+        /// Наборы слоёв
+        /// </summary>
+        public abstract GridLayers GetGridLayers { get; }
 
         /// <summary>
         /// Характеристика материала (модуль Юнга
@@ -29,46 +37,21 @@ namespace ElasticityClassLibrary.GeometryNamespase
             = new MaterialCharacteristic();
 
         /// <summary>
-        /// Наборы слоёв
+        /// Возвращает набор узлов геометрии,
+        /// совпадающих с узлами сетки
         /// </summary>
-        public GridLayers3D GetGridLayers3D
-        {
-            get
-            {
-                GridLayers3D gridLayers3D = new GridLayers3D();
+        /// <param name="grid"></param>
+        /// <returns></returns>
+        public abstract NodeSet GetNodeSet(GridLayers gridLayers);
 
-                foreach (var item in GeometryPrimitives)
-                {
-                    var gridLayers3DFromGeometryPrimitive = (GridLayers3D)item.GetGridLayers;
-
-                    gridLayers3DFromGeometryPrimitive.GridLayersX.ForEach(l => l.Coordinate += CoordinateLocation.X);
-                    gridLayers3DFromGeometryPrimitive.GridLayersY.ForEach(l => l.Coordinate += CoordinateLocation.Y);
-                    gridLayers3DFromGeometryPrimitive.GridLayersZ.ForEach(l => l.Coordinate += CoordinateLocation.Z);
-
-                    gridLayers3D.Merge(gridLayers3DFromGeometryPrimitive);
-                }                                                          
-                
-                return gridLayers3D;
-            }
-        }
-
-        #region Конструкторы
         /// <summary>
-        /// Создаёт отдельный элемент геометрии моделируемого объекта
-        /// в точке с заданными координатами
+        /// Добавляет примитив в элемент геометрии
         /// </summary>
-        /// <param name="сoordinateLocation">Координата расположения
-        /// элемента геометрии относительно координат
-        /// расчетной области</param>
-        public GeometryElement(Coordinate3D сoordinateLocation)
+        /// <param name="geometryPrimitive"></param>
+        public void AddGeometryPrimitive(GeometryPrimitive geometryPrimitive)
         {
-            CoordinateLocation = сoordinateLocation;
+            geometryPrimitive.GeometryElement = this;
+            GeometryPrimitives.Add(geometryPrimitive);
         }
-
-        public GeometryElement()
-        {
-            
-        }
-        #endregion
     }
 }
