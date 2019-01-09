@@ -141,7 +141,7 @@ namespace SparseMatrixRepSeqNamespace
         /// <returns></returns>
         public async Task PrintRightSide()
         {
-            double[] rSide = await GetRightSide();
+            double[] rSide = await GetRightSideAsync();
 
             Console.WriteLine();
             Console.WriteLine("Правая часть СЛАУ:");
@@ -159,7 +159,7 @@ namespace SparseMatrixRepSeqNamespace
         /// <returns></returns>
         public async Task PrintResult()
         {
-            double[] result = await GetResult();
+            double[] result = await GetResultAsync();
 
             Console.WriteLine();
             Console.WriteLine("Результаты решения СЛАУ:");
@@ -182,8 +182,8 @@ namespace SparseMatrixRepSeqNamespace
         {
             Console.WriteLine($"---Проверка решения СЛАУ---");
 
-            double[] rightSide = await GetRightSide();
-            double[] result = await GetResult();
+            double[] rightSide = await GetRightSideAsync();
+            double[] result = await GetResultAsync();
 
             if (rightSide.Length != result.Length)
             {
@@ -249,7 +249,7 @@ namespace SparseMatrixRepSeqNamespace
         /// Возвращает массив правых частей СЛАУ
         /// </summary>
         /// <returns></returns>
-        private async Task<double[]> GetRightSide()
+        private async Task<double[]> GetRightSideAsync()
         {
             double[] rSide = await _fileBinaryRightSide.ReadAsync();
             return rSide;
@@ -259,7 +259,7 @@ namespace SparseMatrixRepSeqNamespace
         /// Возвращает массив коэффициентов решения СЛАУ
         /// </summary>
         /// <returns></returns>
-        private async Task<double[]> GetResult()
+        public async Task<double[]> GetResultAsync()
         {
             double[] result = await _fileBinaryResult.ReadAsync();
             return result;
@@ -295,7 +295,7 @@ namespace SparseMatrixRepSeqNamespace
             //    rowPointers, columnIndices, rightSide,
             //    tolerance, 0, x); //Решение СЛАУ методом LU факторизации
 
-            double[] rightSide = await GetRightSide();
+            double[] rightSide = await GetRightSideAsync();
             double[] solutionVector = new double[matrixCsr.NumRows];
 
             Console.Write($"{DateTime.Now.ToShortTimeString()}: Решение СЛАУ...");

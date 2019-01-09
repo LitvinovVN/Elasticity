@@ -44,5 +44,17 @@ namespace ElasticityClassLibrary.Derivatives
                 alfa1F, h, DerivativeTypeEnum.D2);
             return op;
         }
+
+        /// <summary>
+        /// Создаёт пятиточечный оператор вычисления
+        /// третьей производной
+        /// </summary>
+        /// <param name="getH"></param>
+        /// <returns></returns>
+        public static DerivativeOperator GetDerivativeOperator1D5P_Derivative3(decimal h)
+        {
+            DerivativeOperator1D5P op = new DerivativeOperator1D5P(h, DerivativeTypeEnum.D3);
+            return op;
+        }
     }
 }

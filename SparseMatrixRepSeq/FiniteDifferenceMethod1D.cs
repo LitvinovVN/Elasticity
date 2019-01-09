@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ElasticityClassLibrary.Derivatives;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,11 +29,11 @@ namespace SparseMatrixRepSeqNamespace
         /// <summary>
         /// Значение диапазона слева
         /// </summary>
-        double _axisXValueLeft = 0;
+        double _axisXLeft = 0;
         /// <summary>
         /// Значение диапазона справа
         /// </summary>
-        double _axisXValueRight = 1;
+        double _axisXRight = 1;
 
 
         /// <summary>
@@ -47,7 +48,17 @@ namespace SparseMatrixRepSeqNamespace
         /// <summary>
         /// Дифференциальный оператор
         /// </summary>
-        double[] diffOperator;
+        double[] _diffOperator;
+
+        /// <summary>
+        /// Функция, задаваемая в правой части дифф. уравнения u'+ ... = f(x)
+        /// </summary>
+        Func<double, double> _diffEquationRightSideFunction;
+
+        /// <summary>
+        /// Результат расчета
+        /// </summary>
+        private double[] _result;
         #endregion
 
         #region Открытые свойства
@@ -58,7 +69,7 @@ namespace SparseMatrixRepSeqNamespace
         {
             get
             {
-                return (_axisXValueRight - _axisXValueLeft) / (_numNodes - 1);
+                return (_axisXRight - _axisXLeft) / (_numNodes - 1);
             }
         }
         #endregion
@@ -93,7 +104,7 @@ namespace SparseMatrixRepSeqNamespace
                 Console.WriteLine("-------------------\n");
                 
                 // Внутренние узлы
-                var tuple0 = await slae.SparseMatrixRepSeq.AddRowsSequenceBandAsync(diffOperator,
+                var tuple0 = await slae.SparseMatrixRepSeq.AddRowsSequenceBandAsync(_diffOperator,
                     2, 0, _numNodes - 2);
                 await slae.SparseMatrixRepSeq.PrintMatrix();
                 Console.WriteLine("-------------------\n");                
@@ -107,7 +118,8 @@ namespace SparseMatrixRepSeqNamespace
 
                     for (int i = 2; i < rSide.Length; i++)
                     {
-                        rSide[i] = 6 * ((i-1) * GetH);
+                        double x = (i - 1) * GetH;
+                        rSide[i] = _diffEquationRightSideFunction(x);
                     }
                     
 
@@ -127,6 +139,7 @@ namespace SparseMatrixRepSeqNamespace
                     await slae.PrintResult();
 
                     await slae.PrintCheckResult();
+                    _result = await slae.GetResultAsync();
                 }
                 catch (Exception exc)
                 {
@@ -160,7 +173,70 @@ namespace SparseMatrixRepSeqNamespace
         /// <param name="diffEquation"></param>
         public void SetDiffOperator(double[] diffEquation)
         {
-            diffOperator = diffEquation;
+            _diffOperator = diffEquation;
+        }
+
+        public void AddFunction(DerivativeOperator derivativeOperator1D3P)
+        {
+            _diffOperator = derivativeOperator1D3P.ConvertToArrayDerivativeOperator();
+        }
+        //public void AddFunction(DerivativeOperator1D3P derivativeOperator1D3P)
+        //{
+        //    _diffOperator = derivativeOperator1D3P.ConvertToArrayDerivativeOperator();
+        //}
+
+        /// <summary>
+        /// Настройка границ области
+        /// </summary>
+        /// <param name="axisXLeft">Левая граница</param>
+        /// <param name="axisXRight">Правая граница</param>
+        public void SetAxisX(int axisXLeft, int axisXRight)
+        {
+            _axisXLeft = axisXLeft;
+            _axisXRight = axisXRight;
+        }
+
+        /// <summary>
+        /// Настройка граничных условий
+        /// </summary>
+        /// <param name="functionValueLeft"></param>
+        /// <param name="functionValueRight"></param>
+        public void SetBoundaryCondition(double functionValueLeft, double functionValueRight)
+        {
+            _functionValueLeft = functionValueLeft;
+            _functionValueRight = functionValueRight;
+        }
+
+        /// <summary>
+        /// Устанавливает выражение для вычисления правой части дифф. уравнения
+        /// </summary>
+        /// <param name="diffEquationRightSideFunction"></param>
+        public void SetRightSideFunction(Func<double, double> diffEquationRightSideFunction)
+        {
+            _diffEquationRightSideFunction = diffEquationRightSideFunction;
+        }
+
+        /// <summary>
+        /// Проверка результатов расчета
+        /// </summary>
+        /// <param name="checkingFunction">Функция проверки</param>
+        public CheckingResults1D CheckCalculationResults(Func<double, double> checkingFunction)
+        {
+            if (_result == null || _result.Length == 0) return null;
+
+            var сheckingResults1D = new CheckingResults1D();
+
+            for (int i = 0; i < _result.Length; i++)
+            {
+                double curCoord = i * GetH;
+                var resAtCurNode = new CheckingResult1D();
+                resAtCurNode.X = curCoord;
+                resAtCurNode.ValueCorrect = checkingFunction(curCoord);
+                resAtCurNode.ValueCalculated = _result[i];
+                сheckingResults1D.AddCheckingResultAtNode(resAtCurNode);
+            }
+
+            return сheckingResults1D;
         }
     }
 }

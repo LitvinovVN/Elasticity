@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ElasticityClassLibrary\ElasticityClassLibrary.csproj" />
     <ProjectReference Include="..\SparseMatrixRepSeq\SparseMatrixRepSeq.csproj" />
   </ItemGroup>
 

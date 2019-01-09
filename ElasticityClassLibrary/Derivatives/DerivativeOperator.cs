@@ -17,5 +17,12 @@ namespace ElasticityClassLibrary.Derivatives
             
         }
         #endregion
+
+        /// <summary>
+        /// Преобразовать оператор в массив
+        /// (абстрактный метод)
+        /// </summary>
+        /// <returns></returns>
+        public abstract double[] ConvertToArrayDerivativeOperator();
     }
 }

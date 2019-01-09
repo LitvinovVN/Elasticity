@@ -1,4 +1,5 @@
-﻿using SparseMatrixRepSeqNamespace;
+﻿using ElasticityClassLibrary.Derivatives;
+using SparseMatrixRepSeqNamespace;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -915,10 +916,30 @@ namespace SparseMatrixRepSeqConsoleApp
         /// </summary>
         private static async Task FiniteDifferenceMethod1DTests()
         {
-            // Создаём одномерную задачу
-            var fdm1d = new FiniteDifferenceMethod1D("11. d2udx2", 21);
+            // Создаём одномерную задачу            
+            var fdm1d = new FiniteDifferenceMethod1D("11. d2udx2", 11);
             fdm1d.SetDiffOperator(fdm1d.D2Udx2());
+            fdm1d.SetRightSideFunction((double x) => { return 6 * x; });
             await fdm1d.Calculate();
+            
+            
+            var fdm1d_2 = new FiniteDifferenceMethod1D("11. d2udx2_2", 11);
+            fdm1d_2.AddFunction(1m * (DerivativeOperator1D3P)Derivative.GetDerivativeOperator1D3P_Derivative2(1, 1, (decimal)fdm1d_2.GetH) + 1m * (DerivativeOperator1D3P)Derivative.GetDerivativeOperator1D3P_Derivative1(1,1, (decimal)fdm1d_2.GetH));
+            fdm1d_2.SetAxisX(0, 1);
+            fdm1d_2.SetBoundaryCondition(0, 7);
+            fdm1d_2.SetRightSideFunction( (double x) => { return 6 * x * x + 22 * x + 10; } );
+            await fdm1d_2.Calculate();
+            var checkingResults = fdm1d_2.CheckCalculationResults((double x) => { return 2 * x * x * x + 5 * x * x; });
+            checkingResults.PrintToConsole();
+
+            var fdm1d_3 = new FiniteDifferenceMethod1D("11. d3udx3_3", 11);
+            fdm1d_3.AddFunction(Derivative.GetDerivativeOperator1D5P_Derivative3((decimal)fdm1d_3.GetH));
+            fdm1d_3.SetAxisX(0, 1);
+            fdm1d_3.SetBoundaryCondition(0, 7);
+            fdm1d_3.SetRightSideFunction((double x) => { return 6 * x * x + 22 * x + 10; });
+            await fdm1d_3.Calculate();
+            var checkingResults3 = fdm1d_3.CheckCalculationResults((double x) => { return 2 * x * x * x + 5 * x * x; });
+            checkingResults3.PrintToConsole();
             Console.WriteLine("---Successful end of method---");
         }
 

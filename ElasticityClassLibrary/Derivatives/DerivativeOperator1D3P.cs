@@ -139,6 +139,16 @@ namespace ElasticityClassLibrary.Derivatives
             Ki = -(alfa1B + alfa1F) * kh;
             Kip1 = alfa1B * kh;            
         }
+
+        /// <summary>
+        /// Преобразовывает оператор в массив типа double
+        /// </summary>
+        /// <returns></returns>
+        public override double[] ConvertToArrayDerivativeOperator()
+        {
+            double[] op = new double[] { (double)Kim1, (double)Ki, (double)Kip1 };
+            return op;
+        }
         #endregion
     }
 }

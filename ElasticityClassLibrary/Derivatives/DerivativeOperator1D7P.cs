@@ -9,5 +9,13 @@ namespace ElasticityClassLibrary.Derivatives
     /// </summary>
     public class DerivativeOperator1D7P : DerivativeOperator1D
     {
+        /// <summary>
+        /// Преобразовать оператор в массив
+        /// </summary>
+        /// <returns></returns>
+        public override double[] ConvertToArrayDerivativeOperator()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
